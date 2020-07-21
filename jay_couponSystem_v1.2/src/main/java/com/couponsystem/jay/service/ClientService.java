@@ -1,5 +1,5 @@
 package com.couponsystem.jay.service;
 
-public class StatisticService {
+public class ClientService {
 
 }

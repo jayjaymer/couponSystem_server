@@ -16,31 +16,32 @@ public class CompanyService {
 	private CompanyRepository repo;
 	
 	public void addCompany(Company company) {
-		
+		repo.save(company);
 	}
 	
 	public void updateCompany(Company company, int companyID) {
-		
+		repo.saveAndFlush(company);
 	}
 	public void deleteCompany(int companyID) {
-		
+		repo.deleteById(companyID);
 	}
-	public void getAllCompanies() {
-		
+	public List<Company> getAllCompanies() {
+		return repo.findAll();
 	}
-	public void getOneCompanyByID(int companyID) {
-		
-	}
-	public void checkIfCompany(String email, String password) {
-		
-	}
-	public void getOneCompanyByEmailAndPassword(String email, String password) {
-		
+	public Company getOneCompanyByID(int companyID) {
+		return repo.getOne(companyID);
 	}
 	
-	public List<Coupon> getCompanyCoupons(){
-		return null;
-	}
+//	public boolean checkIfCompany(String email, String password) {
+//		return false;
+//	}
+//	public Company getOneCompanyByEmailAndPassword(String email, String password) {
+//		return repo.;
+//	}
+	
+//	public List<Coupon> getCompanyCoupons(){
+//		return repo.findAll();
+//	}
 	
 	
 }
