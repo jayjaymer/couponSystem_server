@@ -29,11 +29,14 @@ public class CompanyService {
 		return repo.findAll();
 	}
 	public Company getOneCompanyByID(int companyID) {
+		
 		return repo.getOne(companyID);
 	}
 	
 //	public boolean checkIfCompany(String email, String password) {
+//		repo.
 //		return false;
+//	}
 //	}
 //	public Company getOneCompanyByEmailAndPassword(String email, String password) {
 //		return repo.;

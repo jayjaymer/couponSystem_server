@@ -7,4 +7,5 @@ import com.couponsystem.jay.beans.Company;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
+	
 }

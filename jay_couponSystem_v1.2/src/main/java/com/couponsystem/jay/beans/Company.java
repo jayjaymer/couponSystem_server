@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "companies")
-@Builder
+@NoArgsConstructor
+
 public class Company {
 	@Id
 	@GeneratedValue
@@ -29,7 +30,7 @@ public class Company {
 	private String email;
 	@Column(nullable = false)
 	private String password;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Coupon> coupons;
 
 }
