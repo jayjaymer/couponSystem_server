@@ -60,6 +60,11 @@ public class TestCompany implements CommandLineRunner {
 		System.out.println("Get one compnay by ID");
 		System.out.println(companyService.getOneCompanyByID(2));
 		
+		System.out.println("Check if company exists");
+		System.out.println(companyService.checkIfCompany("test3", "123433"));
+		
+		System.out.println("get one company by email and password");
+		companyService.getOneCompanyByEmailAndPassword("test3", "123433");
 		
 		
 	}

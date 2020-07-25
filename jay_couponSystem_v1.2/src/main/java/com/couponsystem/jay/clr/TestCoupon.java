@@ -81,6 +81,23 @@ public class TestCoupon implements CommandLineRunner {
 		System.out.println("get one coupon by ID");
 		System.out.println(couponService.getOneCouponByID(2));
 		
+		System.out.println("check if coupon exists");
+		System.out.println(couponService.checkIfCoupon(3));
+		
+		System.out.println("get one coupon info by coupon ID");
+		System.out.println(couponService.getOneCouponByID(3));
+		
+		System.out.println("test adding purchased coupon");
+		couponService.addPurchaseCoupon(2, 2);
+		couponService.addPurchaseCoupon(1, 3);
+		System.out.println("coupons purchased");
+		
+		System.out.println("delete purchased coupons");
+	//	couponService.deletePurchaseCoupon(1, 3);
+		System.out.println("coupon 2 deleted");
+		
+		System.out.println("get all purchased");
+		System.out.println(couponService.getAllPurchasedCoupons());
 		
 	}
 
