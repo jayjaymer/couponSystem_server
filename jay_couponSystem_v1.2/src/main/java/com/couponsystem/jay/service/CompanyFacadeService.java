@@ -137,11 +137,11 @@ public class CompanyFacadeService extends ClientFacadeService {
 //		}
 
 	// just a getter for client facade company login
-	public int getCompanyID(String email, String password) throws NotFoundException {
-		Company company = companyService.getOneCompanyByEmailAndPassword(email, password);
-
-		return company.getId();
-	}
+//	public int getCompanyID(String email, String password) throws NotFoundException {
+//		Company company = companyService.getOneCompanyByEmailAndPassword(email, password);
+//
+//		return company.getId();
+//	}
 
 
 }

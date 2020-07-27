@@ -11,6 +11,7 @@ import com.couponsystem.jay.beans.Coupon;
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	Company findByEmailAndPassword(String email, String password);
-	Company getOneCompanyByEmailAndPassword(String email, String password);
 	//List<Coupon> getCompanyCoupons();
+	
+	
 }

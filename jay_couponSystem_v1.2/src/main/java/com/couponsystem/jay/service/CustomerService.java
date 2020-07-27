@@ -41,9 +41,9 @@ public class CustomerService {
 		return repo.findByEmailAndPassword(email, password) != null;
 	}
 
-	public Customer getOneCustomerByEmailAndPassword(String email, String password) {
-		return repo.findCustomerByEmailAndPassword(email, password);
-	}
+//	public Customer getOneCustomerByEmailAndPassword(String email, String password) {
+//		return repo.findCustomerByEmailAndPassword(email, password);
+//	}
 	
 	//10%
 	// get the customer coupons.

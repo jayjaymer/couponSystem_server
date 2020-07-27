@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.beans.Customer;
-import com.couponsystem.jay.beans.CustomersVsCoupons;
 import com.couponsystem.jay.exceptions.NoAccessException;
 
 @Service

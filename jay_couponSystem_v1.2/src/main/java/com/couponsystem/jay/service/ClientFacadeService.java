@@ -4,6 +4,8 @@ package com.couponsystem.jay.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.couponsystem.jay.exceptions.NoAccessException;
+
 import lombok.Data;
 
 @Service
@@ -18,7 +20,7 @@ public abstract class ClientFacadeService {
 	protected CustomerService customerService = null;
 	
 	
-	public abstract boolean login (String email, String password);
+	public abstract boolean login (String email, String password) throws NoAccessException;
 	
 	
 

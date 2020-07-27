@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Company;
 import com.couponsystem.jay.beans.Coupon;
+import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.repo.CompanyRepository;
 
 @Service
 @Scope("prototype")
 public class CompanyService {
-
+	private Company companyTest;
+	
 	@Autowired
 	private CompanyRepository repo;
 	
@@ -31,19 +33,26 @@ public class CompanyService {
 	public List<Company> getAllCompanies() {
 		return repo.findAll();
 	}
-	public Company getOneCompanyByID(int companyID) {
-		
-		return repo.getOne(companyID);
+	public Company getOneCompanyByID(int companyID) throws NotFoundException {
+		Company company = new Company();
+		if (repo.getOne(companyID) !=null ) {
+			return repo.getOne(companyID);
+		}else {
+			throw new NotFoundException("Company not found!");
+			
+		}
 	}
 	
 	//40%
 	public boolean checkIfCompany(String email, String password) {
-		return repo.findByEmailAndPassword(email,password) != null;
+		if (repo.findByEmailAndPassword(email,password) != null) {
+			return true;
+		}else {
+			
+			return false;
+		}
 	}
 	
-	public Company getOneCompanyByEmailAndPassword(String email, String password) {
-		return repo.getOneCompanyByEmailAndPassword(email, password);
-	}
 	
 
 	

@@ -31,9 +31,9 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 //	@Query(value = "DELETE from customer_coupons WHERE coupons_id= ?1", nativeQuery = true)
 //	void deleteCouponPurchaseByCouponID(int couponID);
 	
-	@Transactional
-	@Modifying
-	@Query(value = "SELECT * FROM customers_coupons", nativeQuery = true)
-	List<Coupon[]> getCustomersVsCoupons();
+//	@Transactional
+//	@Modifying
+//	@Query(value = "SELECT * FROM customers_coupons", nativeQuery = true)
+//	List<Coupon[]> getCustomersVsCoupons();
 	
 }
