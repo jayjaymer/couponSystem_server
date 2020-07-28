@@ -47,6 +47,13 @@ public class Coupon {
 	private double price;
 	@Column(nullable = false)
 	private String image;
+	@Override
+	public String toString() {
+		return "Coupon #"+ id + ", companyID=" + companyID + ", category=" + category + ", title=" + title
+				+ ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", amount="
+				+ amount + ", price=" + price + ", image=" + image + "\n";
+	}
+	
 	
 	
 

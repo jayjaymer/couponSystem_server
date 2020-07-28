@@ -47,4 +47,12 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Coupon> coupons;
 
+	@Override
+	public String toString() {
+		return "Customer #"+ id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + "\n";
+	}
+
+	
+	
 }

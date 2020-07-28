@@ -171,6 +171,7 @@ public class TestCouponCRUD implements CommandLineRunner {
 		System.out.println("****Coupon DELETE****");
 		couponService.deleteCoupon(9);
 		System.out.println("Coupon 9 Deleted");
+		System.out.println();
 		
 		// GET ALL COUPONS
 		System.out.println("****Coupons Registered****");

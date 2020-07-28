@@ -38,5 +38,10 @@ public class Company {
 //	@JoinColumn(name = "companyID",referencedColumnName = "id")
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Coupon> coupons;
+	
+	@Override
+	public String toString() {
+		return "Company #"+ id + ", name=" + name + ", email=" + email + ", password=" + password + "]" + "\n";
+	}
 
 }
