@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Customer;
+import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.repo.CustomerRepository;
 
 @Service
@@ -32,13 +33,22 @@ public class CustomerService {
 		return repo.findAll();
 	}
 
-	public Customer getOneCustomerByCustomerID(int customerID) {
-		return repo.getOne(customerID);
+	public Customer getOneCustomerByCustomerID(int customerID) throws NotFoundException {
+		if (repo.getOne(customerID) != null) {
+			return repo.getOne(customerID);
+		}else {
+			throw new NotFoundException("No customer found for this id!");
+		}
 	}
 	
 	//40%
 	public boolean checkIfCustomer(String email, String password) {
-		return repo.findByEmailAndPassword(email, password) != null;
+		if (repo.findByEmailAndPassword(email, password) != null) {
+			return true;
+		}else {
+			return false;
+		}
+
 	}
 
 //	public Customer getOneCustomerByEmailAndPassword(String email, String password) {

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.couponsystem.jay.beans.Coupon;
@@ -36,4 +37,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 //	@Query(value = "SELECT * FROM customers_coupons", nativeQuery = true)
 //	List<Coupon[]> getCustomersVsCoupons();
 	
+	@Transactional
+    @Modifying
+    @Query(value = "DELETE FROM customers_vs_coupons WHERE coupons_id=:couponID",nativeQuery = true)
+    void deletePurchase(@Param("couponID") int couponID);
 }

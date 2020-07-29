@@ -52,6 +52,12 @@ public class CouponService {
 	public void deletePurchaseCoupon(int customerID,int couponID) {
 		repo.deleteCouponPurchase(customerID, couponID);
 	}
+	
+	public void deletePurchasedCouponByCouponID(int couponID) {
+		repo.deletePurchase(couponID);
+	}
+	
+
 
 //	public List<Coupon[]> getAllPurchasedCoupons() {
 //	return repo.getCustomersVsCoupons();

@@ -2,16 +2,19 @@ package com.couponsystem.jay.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Company;
 import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.beans.Customer;
+import com.couponsystem.jay.exceptions.AlreadyExistsException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
 @Service
 public class AdminFacadeService extends ClientFacadeService {
+	@Autowired
 	protected CompanyService companyService = new CompanyService();
 	protected CustomerService customerService = new CustomerService();
 	protected CouponService couponService = new CouponService();
@@ -37,18 +40,17 @@ public class AdminFacadeService extends ClientFacadeService {
 		 * @throws CompanyExistsException - if one of the conditions not passed
 		 */
 	
-		public void createCompany(Company company) throws NoAccessException {
+		public void createCompany(Company company) throws AlreadyExistsException {
 
 			List<Company> companies = companyService.getAllCompanies();
 			for (Company comp : companies) {
 
 				if (company.getName().equalsIgnoreCase(comp.getName())) {
-					new NoAccessException("Sorry Company Name -" + company.getName() + "- is in use.");
+					throw new AlreadyExistsException("Sorry Company Name -" + company.getName() + "- is in use.");
 
 				}
 				if (comp.getEmail().equalsIgnoreCase(company.getEmail())) {
-					new NoAccessException("Sorry Company Email -" + company.getEmail() + "- is in use.");
-					return;
+					throw new AlreadyExistsException("Sorry Company Email -" + company.getEmail() + "- is in use.");
 				}
 
 			}
@@ -67,9 +69,12 @@ public class AdminFacadeService extends ClientFacadeService {
 			}
 		}
 		
-		// to delete company all coupons to the company most be deleted.
-//		public void deleteCompany(int companyID) {
-//			List<Coupon> coupons = couponService.getAllCoupons();
+		// try to delete company all coupons to the company most be deleted.
+		public void deleteCompany(int companyID) throws NotFoundException {
+			if (companyService.getOneCompanyByID(companyID) == null) throw new NotFoundException("company");
+			Company comp = companyService.getOneCompanyByID(companyID);
+				
+		//	List<Coupon> coupons = couponService.getAllCoupons();
 //			for (Coupon coupon : coupons) {
 //				if (coupon.getCompanyID() == companyID) {
 //					System.out.println("removing purchased coupons");
@@ -83,9 +88,15 @@ public class AdminFacadeService extends ClientFacadeService {
 //
 //			}
 //			companiesDAO.deleteCompany(companyID);
-//
-//		}
-//		
+			if (comp.getCoupons().size() > 0) {
+				for (Coupon coupon : comp.getCoupons()) {
+					couponService.deletePurchasedCouponByCouponID(coupon.getId());
+				}
+				
+			}
+			companyService.deleteCompany(comp.getId());
+		}
+		
 		
 		public List<Company> getallCompanies() {
 			return companyService.getAllCompanies();
@@ -110,7 +121,7 @@ public class AdminFacadeService extends ClientFacadeService {
 		}
 		
 		// can`t update customer id
-		public void updateCustomer(Customer customer, int customerID) throws NoAccessException {
+		public void updateCustomer(Customer customer, int customerID) throws NoAccessException, NotFoundException {
 			if (customerService.getOneCustomerByCustomerID(customerID) != null) {
 				customerService.updateCustomer(customer);
 			} else {

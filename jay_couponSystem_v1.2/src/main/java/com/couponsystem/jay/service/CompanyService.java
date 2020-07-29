@@ -25,12 +25,15 @@ public class CompanyService {
 	}
 	
 	public void updateCompany(Company company, int companyID) {
-		repo.saveAndFlush(company);
+		repo.flush();
 	}
 	public void deleteCompany(int companyID) {
 		repo.deleteById(companyID);
 	}
 	public List<Company> getAllCompanies() {
+		if ( repo.findAll() != null) {
+			
+		}
 		return repo.findAll();
 	}
 	public Company getOneCompanyByID(int companyID) throws NotFoundException {

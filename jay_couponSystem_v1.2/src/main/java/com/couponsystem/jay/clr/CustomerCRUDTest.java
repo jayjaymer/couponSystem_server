@@ -11,7 +11,7 @@ import com.couponsystem.jay.util.Print;
 
 @Component
 @Order(value = 3)
-public class TestCustomerCRUD implements CommandLineRunner {
+public class CustomerCRUDTest implements CommandLineRunner {
 	@Autowired
 	CustomerService customerService;
 
