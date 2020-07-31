@@ -29,7 +29,8 @@ public class CustomerService {
 	}
 
 	public List<Customer> getAllCustomer() {
-
+		if ( repo.findAll() != null) {
+		}
 		return repo.findAll();
 	}
 

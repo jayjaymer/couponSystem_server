@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.couponsystem.jay.exceptions.NoAccessException;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,6 +44,15 @@ public class Company {
 	@Override
 	public String toString() {
 		return "Company #"+ id + ", name=" + name + ", email=" + email + ", password=" + password + "\n";
+	}
+	
+	public void setId(int id) throws NoAccessException{
+		if (this.id == 0) {
+			this.id = id;
+		}else {
+			throw new NoAccessException("Cannot change company id!");
+		}
+		
 	}
 
 }

@@ -16,6 +16,7 @@ import com.couponsystem.jay.exceptions.NotFoundException;
 public class AdminFacadeService extends ClientFacadeService {
 	@Autowired
 	protected CompanyService companyService = new CompanyService();
+	@Autowired
 	protected CustomerService customerService = new CustomerService();
 	protected CouponService couponService = new CouponService();
 
@@ -45,14 +46,12 @@ public class AdminFacadeService extends ClientFacadeService {
 			List<Company> companies = companyService.getAllCompanies();
 			for (Company comp : companies) {
 
-				if (company.getName().equalsIgnoreCase(comp.getName())) {
+				if (company.getName().equalsIgnoreCase(comp.getName())) 
 					throw new AlreadyExistsException("Sorry Company Name -" + company.getName() + "- is in use.");
-
-				}
-				if (comp.getEmail().equalsIgnoreCase(company.getEmail())) {
+				 if (comp.getEmail().equalsIgnoreCase(company.getEmail())) 
 					throw new AlreadyExistsException("Sorry Company Email -" + company.getEmail() + "- is in use.");
-				}
-
+				
+				 
 			}
 			companyService.addCompany(company);
 		}
@@ -109,11 +108,11 @@ public class AdminFacadeService extends ClientFacadeService {
 		// Customer Facade //
 
 		// can`t add customer with same email as other customer
-		public void addCustomer(Customer customer) throws NoAccessException {
+		public void addCustomer(Customer customer) throws AlreadyExistsException {
 			List<Customer> customers = customerService.getAllCustomer();
 			for (Customer cust : customers) {
 				if (customer.getEmail().equalsIgnoreCase(cust.getEmail())) {
-					throw new NoAccessException("Email is already used.");
+					throw new AlreadyExistsException("Email is already used.");
 				}
 			}
 			customerService.addCustomer(customer);
@@ -122,11 +121,10 @@ public class AdminFacadeService extends ClientFacadeService {
 		
 		// can`t update customer id
 		public void updateCustomer(Customer customer, int customerID) throws NoAccessException, NotFoundException {
-			if (customerService.getOneCustomerByCustomerID(customerID) != null) {
-				customerService.updateCustomer(customer);
-			} else {
-				throw new NoAccessException("Cannot change customer id!");
+			if (customerService.getOneCustomerByCustomerID(customer.getId()) == null) {
+				throw new NoAccessException("ID is not found");
 			}
+			customerService.updateCustomer(customer); 
 		}
 		
 		// to delete customer most delete coupons connected to the customer.

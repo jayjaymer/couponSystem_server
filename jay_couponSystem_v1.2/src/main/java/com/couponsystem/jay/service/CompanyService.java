@@ -25,7 +25,7 @@ public class CompanyService {
 	}
 	
 	public void updateCompany(Company company, int companyID) {
-		repo.flush();
+		repo.saveAndFlush(company);
 	}
 	public void deleteCompany(int companyID) {
 		repo.deleteById(companyID);
@@ -37,7 +37,6 @@ public class CompanyService {
 		return repo.findAll();
 	}
 	public Company getOneCompanyByID(int companyID) throws NotFoundException {
-		Company company = new Company();
 		if (repo.getOne(companyID) !=null ) {
 			return repo.getOne(companyID);
 		}else {
