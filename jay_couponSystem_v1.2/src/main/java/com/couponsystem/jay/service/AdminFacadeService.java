@@ -57,16 +57,24 @@ public class AdminFacadeService extends ClientFacadeService {
 		}
 		
 		// updateCompany - can`t update company id and name
-		public void updateCompany(Company company, int companyID) throws NoAccessException {
-			List<Company> companies = companyService.getAllCompanies();
-			for (Company comp : companies) {
-				if (comp.getId() == companyID && comp.getName().equalsIgnoreCase(company.getName())) {
-					companyService.updateCompany(company, companyID);
-				} else {
-					throw new NoAccessException("No access");
+		public void updateCompany(Company company) throws NoAccessException, NotFoundException {
+				
+				if ((companyService.getOneCompanyByID(company.getId())!=null) || (!companyService.getOneCompanyByID(company.getId()).getName().equalsIgnoreCase(company.getName()) )) {
+					company.setEmail(company.getEmail());
+					company.setPassword(company.getPassword());
+					companyService.updateCompany(company);
+				}else {
+					
+					throw new NoAccessException("Cannot change company name!");
 				}
+				
 			}
+		/*	if (customerService.getOneCustomerByCustomerID(customer.getId()) == null) {
+				throw new NoAccessException("ID is not found");
+			}
+			customerService.updateCustomer(customer); 
 		}
+		*/
 		
 		// try to delete company all coupons to the company most be deleted.
 		public void deleteCompany(int companyID) throws NotFoundException {

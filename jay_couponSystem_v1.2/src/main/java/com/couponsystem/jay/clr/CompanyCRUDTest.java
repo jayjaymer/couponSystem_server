@@ -105,7 +105,7 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		System.out.println("****Updating Company****");
 		System.out.print("Company9 name before update : "+c9.getName());
 		c9.setName("asdhsdhafdshfdshsfdhsdf");
-		companyService.updateCompany(c9, 9);
+		companyService.updateCompany(c9);
 		System.out.println();
 		System.out.println("Company9 name after update : "+c9.getName());
 		System.out.println(companyService.getOneCompanyByID(9));

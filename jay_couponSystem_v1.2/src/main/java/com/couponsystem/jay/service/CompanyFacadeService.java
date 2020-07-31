@@ -3,6 +3,7 @@ package com.couponsystem.jay.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,9 @@ import lombok.Setter;
 @Service
 @Scope("prototype")
 public class CompanyFacadeService extends ClientFacadeService {
-	CompanyService companyService = new CompanyService();
-	CouponService couponService = new CouponService();
-	Company company;
 	
-//	@Getter
-//	@Setter
 	private int companyID;
+	private Company company;
 
 	@Override
 	public boolean login(String email, String password) {
@@ -48,27 +45,31 @@ public class CompanyFacadeService extends ClientFacadeService {
 	 * @param coupon - insert a coupon to Database
 	 * @throws TitleUsedException - if condition not passed.
 	 */
-//	public void createCoupon(Coupon coupon) throws NoAccessException {
-//		// cant add exsiting name of a coupon from the SAME company.
-//		// can add coupon with the same name from OTHER company
-//
-//		List<Coupon> coupons = 
-//
-//		for (Coupon cpn : coupons) {
-//			if (coupon.getTitle().equalsIgnoreCase(cpn.getTitle())) {
-//				throw new NoAccessException("title is used!");
-//			}
-//		}
-//		couponService.addCoupon(coupon);
-//	}
+	public void createCoupon(Coupon coupon) throws NoAccessException {
+		// cant add exsiting name of a coupon from the SAME company.
+		// can add coupon with the same name from OTHER company
+
+		List<Coupon> coupons = couponService.getAllCoupons();
+
+		for (Coupon cpn : coupons) {
+			if (coupon.getTitle().equalsIgnoreCase(cpn.getTitle())) {
+				throw new NoAccessException("title is used!");
+			}
+		}
+		couponService.addCoupon(coupon);
+	}
 
 	// cant update coupon id or company id
-	public void updateCoupon(Coupon coupon) throws NoAccessException {
-		if (companyID != coupon.getCompanyID()) {
+	public void updateCoupon(Coupon coupon) throws NoAccessException, NotFoundException {
+		int companyCoupon = couponService.getOneCouponByID(coupon.getId()).getCompanyID();
+		
+		if (companyCoupon!= coupon.getCompanyID()) {
 			throw new NoAccessException("No access to change company ID");
 		}
 
 		couponService.updateCoupon(coupon);
+//		List<Coupon> updateCouponList = companyService.getOneCompanyByID(company.getId()).getCoupons();
+//		company.setCoupons(updateCouponList);
 	}
 
 	// to delete coupon most delete all connections to the coupon

@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.couponsystem.jay.exceptions.NoAccessException;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,6 +56,23 @@ public class Coupon {
 				+ amount + ", price=" + price + ", image=" + image + "\n";
 	}
 	
+	public void setId(int id) throws NoAccessException{
+		if (this.id == 0) {
+			this.id = id;
+		}else {
+			throw new NoAccessException("Cannot change coupon id!");
+		}
+		
+	}
+	
+	public void setcompanyID(int companyID) throws NoAccessException{
+		if (this.companyID == 0) {
+			this.companyID = companyID;
+		}else {
+			throw new NoAccessException("Cannot change company id!");
+		}
+		
+	}
 	
 	
 

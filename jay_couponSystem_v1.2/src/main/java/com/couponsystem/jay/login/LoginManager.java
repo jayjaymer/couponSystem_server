@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
+import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.service.ClientFacadeService;
@@ -28,7 +29,7 @@ public class LoginManager {
 
 	}
 
-	public ClientFacadeService login(String email, String password, ClientType clientType) throws NotFoundException {
+	public ClientFacadeService login(String email, String password, ClientType clientType) throws NotFoundException, NoAccessException {
 
 		switch (clientType) {
 		case ADMINISTRATOR:

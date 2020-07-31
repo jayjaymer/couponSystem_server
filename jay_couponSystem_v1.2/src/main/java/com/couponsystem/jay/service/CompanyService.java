@@ -24,7 +24,7 @@ public class CompanyService {
 		repo.save(company);
 	}
 	
-	public void updateCompany(Company company, int companyID) {
+	public void updateCompany(Company company) {
 		repo.saveAndFlush(company);
 	}
 	public void deleteCompany(int companyID) {
