@@ -24,8 +24,12 @@ public class CompanyService {
 		repo.save(company);
 	}
 	
-	public void updateCompany(Company company) {
-		repo.saveAndFlush(company);
+	public void updateCompany(Company company) throws NotFoundException {
+//		if (repo.saveAndFlush(company)!=null) {
+			repo.saveAndFlush(company);
+//		}else {
+//			throw new NotFoundException("Company does not exists");
+//		}
 	}
 	public void deleteCompany(int companyID) {
 		repo.deleteById(companyID);
@@ -55,6 +59,19 @@ public class CompanyService {
 		}
 	}
 	
+	public Company findCompanyByID(int companyID) throws NotFoundException {
+		if (repo.findById(companyID)!=null) {
+			return repo.findById(companyID);
+		}else {
+			throw new NotFoundException("Company id not found");
+		}
+	}
+	
+	public Company findCompanyByEmailAndPassword(String email, String password) {
+		if (repo.findByEmailAndPassword(email, password)==null) {
+		}
+		return repo.findByEmailAndPassword(email, password);
+	}
 	
 
 	

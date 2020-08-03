@@ -6,11 +6,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.couponsystem.jay.beans.Customer;
+import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CustomerService;
 import com.couponsystem.jay.util.Print;
 
-@Component
-@Order(value = 3)
+//@Component
+//@Order(value = 3)
 public class CustomerCRUDTest implements CommandLineRunner {
 	@Autowired
 	CustomerService customerService;
@@ -129,9 +130,13 @@ public class CustomerCRUDTest implements CommandLineRunner {
 		// GET ONE CUSTOMER
 		System.out.println("****Get one registerd Customer By ID****");
 		System.out.println("real info test");
-		System.out.println(customerService.getOneCustomerByCustomerID(1));
-//		System.out.println("fake info test");
-//		System.out.println(customerService.getOneCustomerByCustomerID(55));
+		System.out.println(customerService.findCustomerByID(1));
+		System.out.println("fake info test");
+		try {
+			System.out.println(customerService.findCustomerByID(55));
+		} catch (NotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println();
 		
 		// CHECK IF CUSTOMER EXISTS

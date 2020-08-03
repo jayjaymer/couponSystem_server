@@ -14,8 +14,8 @@ import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.util.Print;
 
-@Component
-@Order(value = 4)
+//@Component
+//@Order(value = 4)
 public class AdminFacadeTest implements CommandLineRunner {
 	@Autowired
 	private AdminFacadeService admin;
@@ -44,6 +44,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 		} catch (NoAccessException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.println();
 		System.out.println("~~real info test~~");
 		try {
 			adminAdmin = (AdminFacadeService) managerLogin.login("admin@admin.com", "admin", ClientType.ADMINISTRATOR);
@@ -94,63 +95,66 @@ public class AdminFacadeTest implements CommandLineRunner {
 				System.out.println();
 
 		
-//		// Cannot Update Company name and id
-//		System.out.println("*******admin facade - try update company information*******");
-//		System.out.println("~~~trying to change id, name and email~~~");
-//		Company company = admin.getOneCompany(testCompany1.getId());
-//		System.out.println("Company before attempt");
-//		System.out.println(admin.getOneCompany(testCompany1.getId()));
-//		try {
-//			testCompany1.setId(99);
-//			admin.updateCompany(testCompany1);
-//		} catch (NoAccessException e) {
-//			System.out.println(e.getMessage());
-//		}
-//
-//		try {
-//			testCompany1.setName("sadgads");
-//			admin.updateCompany(testCompany1);
-//		} catch (NoAccessException e) {
-//			System.out.println(e.getMessage());
-//		}
-//		System.out.println(admin.getOneCompany(testCompany1.getId()));
-//		System.out.println();
-//		
-//		System.out.println("~~~trying to change email and password~~~");
-//		Company testCompany3 = Company.builder()
-//				.name("Audi")
-//				.email("audi@gmail.com")
-//				.password("1234")
-//				.build();
-//		try {
-//			admin.createCompany(testCompany3);
-//			testCompany3.setEmail("dasgasdgadsggasddasga");
-//			testCompany3.setPassword("asdhdsahadshadshdsahsdh");
-//			admin.updateCompany(testCompany3);
-//		} catch (NoAccessException e) {
-//			System.out.println(e.getMessage());
-//		}
-//
-//		System.out.println("Company after attempt");
-//		System.out.println(admin.getOneCompany(testCompany3.getId()));
+		// Cannot Update Company name and id
+		System.out.println("*******admin facade - try update company information*******");
+		System.out.println("~~~trying to change id and name~~~");
+		Company company = admin.getOneCompany(testCompany1.getId());
+		System.out.println("          *Company #10 before update attempt*");
+		System.out.println(admin.findCompanyByID(testCompany1.getId()));
+		try {
+			testCompany1.setId(99);
+			admin.updateCompany(testCompany1);
+		} catch (NoAccessException e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			testCompany1.setName("sadgads");
+			admin.updateCompany(testCompany1);
+		} catch (NoAccessException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println();
+		System.out.println("          *Company #10 after update attempt*");
+		System.out.println(admin.findCompanyByID(testCompany1.getId()));
 		
+		System.out.println("~~~trying to change email and password~~~");
+		Company testCompany3 = Company.builder()
+				.name("Audi")
+				.email("audi@gmail.com")
+				.password("1234")
+				.build();
+		System.out.println("          *Company #11 before update attempt*");
+		admin.createCompany(testCompany3);
+		System.out.println(admin.findCompanyByID(testCompany3.getId()));
+		try {
+			testCompany3.setEmail("dasgasdgadsggasddasga");
+			testCompany3.setPassword("asdhdsahadshadshdsahsdh");
+			
+			admin.updateCompany(testCompany3);
+		} catch (NoAccessException e) {
+			System.out.println(e.getMessage());
+		}
 		
-//		System.out.println("Retrun info to original.");
-//		try {
-//			testCompany1.setEmail("bmw@gmail.com");
-//			testCompany1.setPassword("1234");
-//			admin.updateCompany(testCompany1, 10);
-//		} catch (Exception e) {
-//		}
-//		System.out.println(admin.getOneCompany(testCompany1.getId()));
-//		System.out.println();
+		System.out.println("          *Company #11 after update attempt*");
+		System.out.println(admin.findCompanyByID(testCompany3.getId()));
 		
-//		// Delete Coupons Purchase history + delete available coupons from this company
-//		System.out.println("*******admin facade - remove FK and purchased coupons.*******");
-//		System.out.println("Removing A company.");
-//		admin.deleteCompany(8);
-//		System.out.println("Company 8 Deleted");
-//		System.out.println();
+		try {
+			testCompany3.setEmail("audi@gmail.com");
+			testCompany3.setPassword("1234");
+			admin.updateCompany(testCompany3);
+		} catch (Exception e) {
+		}
+		
+		System.out.println("            *Retrun info to original.*");
+		System.out.println(admin.findCompanyByID(testCompany3.getId()));
+		
+		// Delete Coupons Purchase history + delete available coupons from this company
+		System.out.println("*******admin facade - remove FK and purchased coupons.*******");
+		System.out.println("Removing A company.");
+		admin.deleteCompany(11);
+		System.out.println("Company 11 Deleted");
+		System.out.println();
 		
 		// Return all companies
 		System.out.println("*******admin facade - get all companies*******");
@@ -233,12 +237,12 @@ public class AdminFacadeTest implements CommandLineRunner {
 				}
 				System.out.println(admin.getOneCustomer(10));
 				System.out.println();
-//				
+				
 //				// Delete customer coupon purchase
-////				System.out.println("*******admin facade - deleting customer purchased coupons.*******");
-////				adminAdmin.deleteCustomer(7);
-////				System.out.println();
-//				
+				System.out.println("*******admin facade - deleting customer purchased coupons.*******");
+//				admin.dele
+//				System.out.println();
+				
 				// return all Customers.
 				System.out.println("*******admin facade - get all customers*******");
 				System.out.println(admin.getAllCustomers());

@@ -51,6 +51,13 @@ public class CustomerService {
 		}
 
 	}
+	public Customer findCustomerByID(int customerID) throws NotFoundException {
+		if (repo.findById(customerID)!=null) {
+			return repo.findById(customerID);
+		}else {
+			throw new NotFoundException("Customer id not found!");
+		}
+	}
 
 //	public Customer getOneCustomerByEmailAndPassword(String email, String password) {
 //		return repo.findCustomerByEmailAndPassword(email, password);

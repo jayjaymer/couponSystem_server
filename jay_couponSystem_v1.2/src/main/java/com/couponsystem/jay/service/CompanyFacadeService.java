@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.couponsystem.jay.beans.Category;
 import com.couponsystem.jay.beans.Company;
 import com.couponsystem.jay.beans.Coupon;
+import com.couponsystem.jay.exceptions.AlreadyExistsException;
+import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
@@ -24,18 +26,14 @@ public class CompanyFacadeService extends ClientFacadeService {
 	private Company company;
 
 	@Override
-	public boolean login(String email, String password) {
-		List<Company> companies = companyService.getAllCompanies();
+	public boolean login(String email, String password) throws LoginFailledException, NotFoundException {
 		System.out.println(email + " " + password);
-		for (Company company : companies) {
-			if (company.getEmail().equalsIgnoreCase(email) && company.getPassword().equalsIgnoreCase(password)) {
+			if (companyService.findCompanyByEmailAndPassword(email, password)== null) {
+				throw new LoginFailledException();
+			}
 				System.out.println("Company logged in");
 				return true;
-			}
 		}
-		System.out.println("Company not found.");
-		return false;
-	}
 
 	/**
 	 * on this method the company is creating new coupon ONLY IF : the new coupon is
@@ -45,7 +43,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 	 * @param coupon - insert a coupon to Database
 	 * @throws TitleUsedException - if condition not passed.
 	 */
-	public void createCoupon(Coupon coupon) throws NoAccessException {
+	public void createCoupon(Coupon coupon) throws AlreadyExistsException {
 		// cant add exsiting name of a coupon from the SAME company.
 		// can add coupon with the same name from OTHER company
 
@@ -53,7 +51,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 
 		for (Coupon cpn : coupons) {
 			if (coupon.getTitle().equalsIgnoreCase(cpn.getTitle())) {
-				throw new NoAccessException("title is used!");
+				throw new AlreadyExistsException("title is used!");
 			}
 		}
 		couponService.addCoupon(coupon);
@@ -68,8 +66,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 		}
 
 		couponService.updateCoupon(coupon);
-//		List<Coupon> updateCouponList = companyService.getOneCompanyByID(company.getId()).getCoupons();
-//		company.setCoupons(updateCouponList);
+
 	}
 
 	// to delete coupon most delete all connections to the coupon
@@ -94,25 +91,25 @@ public class CompanyFacadeService extends ClientFacadeService {
 //				throw new NoAccessException("no coupons found for this company!");
 //			}
 //		}
-
-	// get all the coupons of the connected company by category
-	public List<Coupon> getCompanyCouponsByCategory(Category category) {
-		List<Coupon> result = new ArrayList<Coupon>();
-		List<Coupon> coupons = couponService.getAllCoupons();
-
-		if (coupons != null) {
-			for (Coupon coupon : coupons) {
-				if (coupon.getCategory().equals(category) && coupon.getCompanyID() == companyID) {
-					result.add(coupon);
-				}
-			}
-			if (result.isEmpty() == true) {
-				System.out.println("no coupons");
-			}
-		}
-		return result;
-
-	}
+//
+//	// get all the coupons of the connected company by category
+//	public List<Coupon> getCompanyCouponsByCategory(Category category) {
+//		List<Coupon> result = new ArrayList<Coupon>();
+//		List<Coupon> coupons = couponService.getAllCoupons();
+//
+//		if (coupons != null) {
+//			for (Coupon coupon : coupons) {
+//				if (coupon.getCategory().equals(category) && coupon.getCompanyID() == companyID) {
+//					result.add(coupon);
+//				}
+//			}
+//			if (result.isEmpty() == true) {
+//				System.out.println("no coupons");
+//			}
+//		}
+//		return result;
+//
+//	}
 
 	// get all the coupons of the connected company by max price
 //		public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice) {

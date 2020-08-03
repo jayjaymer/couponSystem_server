@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.couponsystem.jay.beans.Category;
 import com.couponsystem.jay.beans.Coupon;
+import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CouponService;
 import com.couponsystem.jay.util.DateUtil;
 import com.couponsystem.jay.util.Print;
@@ -21,6 +22,8 @@ public class CouponCRUDTest implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
 		System.out.println();
 		System.out.println();
 		System.out.println();
@@ -134,7 +137,7 @@ public class CouponCRUDTest implements CommandLineRunner {
 				.build();
 		
 		Coupon coupon9 = Coupon.builder()
-				.companyID(9)
+				.companyID(4)
 				.category(Category.VACATION)
 				.title("Test title 9")
 				.description("Test dec 9")
@@ -181,9 +184,13 @@ public class CouponCRUDTest implements CommandLineRunner {
 		// GET ONE COUPON
 		System.out.println("****Get one registerd Coupon By ID****");
 		System.out.println("real info test");
-		System.out.println(couponService.getOneCouponByID(1));
-//		System.out.println("fake info test");
-//		System.out.println(couponService.getOneCouponByID(55));
+		System.out.println(couponService.findCouponByID(1));
+		System.out.println("fake info test");
+		try {
+			System.out.println(couponService.findCouponByID(55));
+		} catch (NotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println();
 		
 		// IS COUPON EXISTS
@@ -193,23 +200,6 @@ public class CouponCRUDTest implements CommandLineRunner {
 		System.out.println("fake info test");
 		System.out.println(couponService.checkIfCoupon(55));
 		System.out.println();
-		
-		// GET ONE COUPON BY COMPANY ID
-//		System.out.println("****Get Coupons by company id****");
-//		
-//		System.out.println();
-		
-	//	System.out.println("test adding purchased coupon");
-	//	couponService.addPurchaseCoupon(1, 3);
-		//couponService.addPurchaseCoupon(2, 2);
-	//	System.out.println("coupons purchased");
-		
-//		System.out.println("delete purchased coupons");
-//	
-//		System.out.println("coupon 2 deleted");
-		
-//		System.out.println("get all purchased");
-//		System.out.println(couponService.getAllPurchasedCoupons());
 		
 	}
 

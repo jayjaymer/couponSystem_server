@@ -12,6 +12,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	Company findByEmailAndPassword(String email, String password);
 	//List<Coupon> getCompanyCoupons();
+	Company findById(int companyID);
 	
 	
 }

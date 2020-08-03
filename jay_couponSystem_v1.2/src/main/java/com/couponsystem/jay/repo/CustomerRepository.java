@@ -11,5 +11,6 @@ import com.couponsystem.jay.beans.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	
 	Customer findByEmailAndPassword(String email, String password);
+	Customer findById(int customerID);
 
 }

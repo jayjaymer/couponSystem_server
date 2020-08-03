@@ -16,8 +16,8 @@ import com.couponsystem.jay.repo.CouponRepository;
 import com.couponsystem.jay.repo.CustomerRepository;
 import com.couponsystem.jay.util.DateUtil;
 
-@Component
-@Order(value = 6)
+//@Component
+//@Order(value = 6)
 public class oneTomanyTest implements CommandLineRunner {
 	@Autowired
 	private CustomerRepository repo;

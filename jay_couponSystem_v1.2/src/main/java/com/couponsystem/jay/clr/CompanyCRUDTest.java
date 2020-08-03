@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.couponsystem.jay.beans.Company;
+import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CompanyService;
 import com.couponsystem.jay.util.Print;
 
@@ -20,6 +21,8 @@ public class CompanyCRUDTest implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
+		
+		
 		System.out.println();
 		System.out.println();
 		System.out.println();
@@ -126,10 +129,13 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		// GET ONE COMPANY
 		System.out.println("****Get one registerd Company By ID****");
 		System.out.println("real info test");
-		System.out.println(companyService.getOneCompanyByID(2));
-		
-//		System.out.println("fake info test");
-//		System.out.println(companyService.getOneCompanyByID(55));
+		System.out.println(companyService.findCompanyByID(2));
+		System.out.println("fake info test");
+		try {
+			companyService.findCompanyByID(55);
+		} catch (NotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 		System.out.println();
 		
 		// IS COMPANY EXISTS
@@ -139,6 +145,8 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		System.out.println("fake info test");
 		System.out.println(companyService.checkIfCompany("asdgadsgdsagasd@gmail.com", "1234"));
 		System.out.println();
+		
+	
 
 		
 		

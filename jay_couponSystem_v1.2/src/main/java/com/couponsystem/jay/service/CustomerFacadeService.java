@@ -27,7 +27,6 @@ public class CustomerFacadeService extends ClientFacadeService{
 				return true;
 			}
 		}
-		System.out.println("Customer not found.");
 		return false;
 
 	}

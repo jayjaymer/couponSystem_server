@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -44,7 +43,7 @@ public class Company {
 	
 	@Override
 	public String toString() {
-		return "Company #"+ id + ", name=" + name + ", email=" + email + ", password=" + password + "\n";
+		return "Company #"+ id + ", name=" + name + ", email=" + email + ", password=" + password + ", coupons = "+coupons + "\n";
 	}
 	
 	public void setId(int id) throws NoAccessException{

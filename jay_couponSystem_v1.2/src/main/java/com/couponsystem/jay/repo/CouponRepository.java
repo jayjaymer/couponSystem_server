@@ -10,12 +10,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.couponsystem.jay.beans.Category;
 import com.couponsystem.jay.beans.Coupon;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 	Coupon findById(int couponID);
 	
 	// CustomerVsCoupons
+	
 	
 	@Transactional
 	@Modifying
@@ -41,4 +43,14 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
     @Modifying
     @Query(value = "DELETE FROM customers_vs_coupons WHERE coupons_id=:couponID",nativeQuery = true)
     void deletePurchase(@Param("couponID") int couponID);
+	
+	// CompanyVsCoupons
+	
+	List<Coupon> findByCompanyID(int companyID);
+	
+	List<Coupon> findByCategoryAndCompanyID(Category category, int companyID);
+	
+	List<Coupon> findByPriceLessThanAndCompanyID(double price, int companyID);
+	
+	
 }

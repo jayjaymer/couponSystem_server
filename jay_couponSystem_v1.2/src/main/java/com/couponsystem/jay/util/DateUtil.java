@@ -10,7 +10,7 @@ import java.sql.Date;
  */
 public class DateUtil {
 	public static Date changeDateType(java.util.Date date) {
-		return new java.sql.Date(date.getYear() - 1900, date.getMonth() - 1, date.getDate());
+		return new java.sql.Date(date.getYear() - 1900, date.getMonth() - 1, date.getDay());
 	}
 
 }

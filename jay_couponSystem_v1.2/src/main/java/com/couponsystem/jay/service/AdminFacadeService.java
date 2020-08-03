@@ -58,23 +58,18 @@ public class AdminFacadeService extends ClientFacadeService {
 		
 		// updateCompany - can`t update company id and name
 		public void updateCompany(Company company) throws NoAccessException, NotFoundException {
-				
-				if ((companyService.getOneCompanyByID(company.getId())!=null) || (!companyService.getOneCompanyByID(company.getId()).getName().equalsIgnoreCase(company.getName()) )) {
-					company.setEmail(company.getEmail());
-					company.setPassword(company.getPassword());
-					companyService.updateCompany(company);
-				}else {
-					
+			
+			if (companyService.findCompanyByID(company.getId())==null) {
+				throw new NotFoundException("Company does not exists");
+			}
+			Company comp = companyService.getOneCompanyByID(company.getId());
+			if (!company.getName().equalsIgnoreCase(comp.getName())) {
 					throw new NoAccessException("Cannot change company name!");
-				}
-				
 			}
-		/*	if (customerService.getOneCustomerByCustomerID(customer.getId()) == null) {
-				throw new NoAccessException("ID is not found");
+			companyService.updateCompany(company);
+						
 			}
-			customerService.updateCustomer(customer); 
-		}
-		*/
+
 		
 		// try to delete company all coupons to the company most be deleted.
 		public void deleteCompany(int companyID) throws NotFoundException {
@@ -112,6 +107,19 @@ public class AdminFacadeService extends ClientFacadeService {
 		public Company getOneCompany(int companyID) throws NotFoundException {
 			return companyService.getOneCompanyByID(companyID);
 		}
+		
+		public Company findCompanyByID(int companyID) throws NotFoundException {
+			return companyService.findCompanyByID(companyID);
+		}
+		
+		/*
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
 		
 		// Customer Facade //
 
@@ -156,5 +164,11 @@ public class AdminFacadeService extends ClientFacadeService {
 			return customerService.getOneCustomerByCustomerID(customerID);
 
 		}
+		
+		public Customer findCustomerById(int customerID) throws NotFoundException {
+			return customerService.findCustomerByID(customerID);
+		}
+		
+		
 
 }
