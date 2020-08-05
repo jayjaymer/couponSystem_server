@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.couponsystem.jay.beans.Category;
 import com.couponsystem.jay.beans.Coupon;
-@Repository
 public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 	Coupon findById(int couponID);
 	
@@ -34,15 +33,12 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
 //	@Query(value = "DELETE from customer_coupons WHERE coupons_id= ?1", nativeQuery = true)
 //	void deleteCouponPurchaseByCouponID(int couponID);
 	
-//	@Transactional
-//	@Modifying
-//	@Query(value = "SELECT * FROM customers_coupons", nativeQuery = true)
-//	List<Coupon[]> getCustomersVsCoupons();
+
 	
 	@Transactional
     @Modifying
-    @Query(value = "DELETE FROM customers_vs_coupons WHERE coupons_id=:couponID",nativeQuery = true)
-    void deletePurchase(@Param("couponID") int couponID);
+    @Query(value = "DELETE FROM companies_coupons WHERE coupons_id=:couponID",nativeQuery = true)
+    void deleteCompanyCoupons(@Param("couponID") int couponID);
 	
 	// CompanyVsCoupons
 	

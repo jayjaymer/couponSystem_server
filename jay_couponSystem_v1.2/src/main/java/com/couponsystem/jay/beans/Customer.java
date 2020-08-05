@@ -47,13 +47,14 @@ public class Customer {
 
 	//	@OneToMany
 //	@JoinTable(name = "customer_vs_coupons")
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Coupon.class,cascade = CascadeType.ALL)
+	//@JoinColumn(name = "customer_fk",referencedColumnName = "id")
 	private List<Coupon> coupons;
 
 	@Override
 	public String toString() {
 		return "Customer #"+ id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + "\n";
+				+ ", password=" + password + ", coupons = "+coupons + "\n";
 	}
 	
 	public void setId(int id) throws NoAccessException{

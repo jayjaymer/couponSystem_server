@@ -17,13 +17,14 @@ import com.couponsystem.jay.exceptions.NotFoundException;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Service
 @Scope("prototype")
+@ToString
 public class CompanyFacadeService extends ClientFacadeService {
 	
 	private int companyID;
-	private Company company;
 
 	@Override
 	public boolean login(String email, String password) throws LoginFailledException, NotFoundException {
@@ -70,69 +71,68 @@ public class CompanyFacadeService extends ClientFacadeService {
 	}
 
 	// to delete coupon most delete all connections to the coupon
-//		public void deleteCoupon(int couponID) {
-//			List<Coupon> coupons = couponService.getAllCoupons();
-//			for (Coupon coupon : coupons) {
-//				if (coupon.getId() == couponID) {
-//					System.out.println("deleting purchase history ");
-//					couponService.deletePurchaseCoupon(customerID, couponID);
-//					System.out.println("deleted.");
-//				}
-//			}
-//			couponService.deleteCoupon(couponID);
-//		}
+		public void deleteCoupon(int couponID) {
+			List<Coupon> coupons = couponService.getAllCoupons();
+			for (Coupon coupon : coupons) {
+				if (coupon.getId() == couponID) {
+					System.out.println("deleting purchase history ");
+					couponService.deletePurchasedCouponByCouponID(couponID);
+					System.out.println("deleted.");
+				}
+			}
+			couponService.deleteCoupon(couponID);
+		}
 
 	// get all the coupons of the connected company
-//		public List<Coupon> getCompanyCoupons() throws NoAccessException {
-//
-//			if (couponsDAO.getCouponsByCompanyID(companyID) != null) {
-//				return couponsDAO.getCouponsByCompanyID(companyID);
-//			} else {
-//				throw new NoAccessException("no coupons found for this company!");
-//			}
-//		}
-//
-//	// get all the coupons of the connected company by category
-//	public List<Coupon> getCompanyCouponsByCategory(Category category) {
-//		List<Coupon> result = new ArrayList<Coupon>();
-//		List<Coupon> coupons = couponService.getAllCoupons();
-//
-//		if (coupons != null) {
-//			for (Coupon coupon : coupons) {
-//				if (coupon.getCategory().equals(category) && coupon.getCompanyID() == companyID) {
-//					result.add(coupon);
-//				}
-//			}
-//			if (result.isEmpty() == true) {
-//				System.out.println("no coupons");
-//			}
-//		}
-//		return result;
-//
-//	}
+		public List<Coupon> getCompanyCoupons() throws  NotFoundException {
+
+			if (couponService.getCouponsByCompanyID(companyID) != null) {
+				return couponService.getCouponsByCompanyID(companyID);
+			} else {
+				throw new NotFoundException("no coupons found for this company!");
+			}
+		}
+
+	// get all the coupons of the connected company by category
+	public List<Coupon> getCompanyCouponsByCategory(Category category, int companyID) {
+		List<Coupon> result = new ArrayList<Coupon>();
+		List<Coupon> coupons = couponService.getAllCoupons();
+
+		if (coupons != null) {
+			for (Coupon coupon : coupons) {
+				if (coupon.getCategory().equals(category) && coupon.getCompanyID() == companyID) {
+					result.add(coupon);
+				}
+			}
+			if (result.isEmpty() == true) {
+				System.out.println("no coupons");
+			}
+		}
+		return result;
+
+	}
 
 	// get all the coupons of the connected company by max price
-//		public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice) {
-//			List<Coupon> result = new ArrayList<Coupon>();
-//			List<Coupon> coupons = couponsDAO.getCouponsByCompanyID(companyID);
-//			for (Coupon coupon : coupons) {
-//				if (coupon.getPrice() <= maxPrice) {
-//					result.add(coupon);
-//
-//				}
-//			}
-//			if (result.isEmpty() == true) {
-//				System.out.println("no coupons for this price");
-//			}
-//			return result;
-//		}
+		public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice, int companyID) {
+			List<Coupon> result = new ArrayList<Coupon>();
+			List<Coupon> coupons = couponService.getAllCoupons();
+			for (Coupon coupon : coupons) {
+				if (coupon.getPrice() <= maxPrice) {
+					result.add(coupon);
+
+				}
+			}
+			if (result.isEmpty() == true) {
+				System.out.println("no coupons for this price");
+			}
+			return result;
+		}
 
 	// get all company info including coupons
-//	public Company getCompanyDetails()  {
-//			Company companies = companyService.getOneCompanyByID(companyID);
-//			companies.setCoupons(getCompanyCoupons());
-//			return companies;
-//		}
+	public Company getCompanyDetails() throws NotFoundException  {
+			Company companies = companyService.getOneCompanyByID(this.companyID);
+			return companies;
+		}
 
 	// just a getter for client facade company login
 //	public int getCompanyID(String email, String password) throws NotFoundException {

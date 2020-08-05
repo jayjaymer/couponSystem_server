@@ -35,20 +35,23 @@ public class CompanyFacadeTEST implements CommandLineRunner {
 	private LoginManager managerLogin;
 	@Autowired
 	protected CompanyService admin;
+	
+	
 
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println();
 		System.out.println();
 		System.out.println();
-		
+
 		Company porche = Company.builder()
 				.name("Porsche")
 				.email("porsche@gmail.com")
 				.password("123")
-				
+				.coupons(null)
 				.build();
 		admin.addCompany(porche);
+		
 		
 		// COMPANY FACADE TEST
 		
@@ -77,8 +80,8 @@ public class CompanyFacadeTEST implements CommandLineRunner {
 					System.out.println(msg.getMessage());
 				}
 				System.out.println();
-				System.out.println("$$$$$$$$ PROSCHE $$$$$$$$");
-				System.out.println(companyFacadeService.getCompanyService().findCompanyByID(porche.getId()));
+				System.out.println("$$$$$$$$ PROSCHE INFO $$$$$$$$");
+				System.out.println(porscheCompany.getCompanyService().findCompanyByID(porche.getId()));
 				System.out.println();
 
 				// add company if title is not the same as other coupons
@@ -130,89 +133,90 @@ public class CompanyFacadeTEST implements CommandLineRunner {
 					System.out.println("~~~adding unique coupons~~~");
 					companyFacadeService.createCoupon(porscheCoupon1);
 					companyFacadeService.createCoupon(porscheCoupon2);
-					System.out.println("Coupons Added.");
+					System.out.println("Two Coupons Added.");
 				} catch (AlreadyExistsException e) {
 					System.out.println(e.getMessage());
 				}
-				
-		//		List<Coupon> porscheCoupons = Arrays.asList(porscheCoupon1,porscheCoupon2);
-				List<Coupon> porscheCoupons = new ArrayList<Coupon>();
-		//		porche.setCoupons(porscheCoupons);
-				porscheCoupons.add(porscheCoupon1);
-				porscheCoupons.add(porscheCoupon2);
-				
-				System.out.println(companyFacadeService.getCompanyService().findCompanyByID(porche.getId()));
 				System.out.println();
 				
-
-//				System.out.println(colaCompany.getCompanyCoupons());
-//				System.out.println();
-				
-//				// updateCoupon method
-//				System.out.println("*******company facade - cant change company and coupon ID*******");
-//				System.out.println("~~~trying to change id.~~~");
-//				System.out.println(couponService.getOneCouponByID(coupontest1.getId()));
-//				try {
-//					Coupon coupon = couponService.getOneCouponByID(coupontest1.getId());
-//					coupon.setId(21312321);
-//					
-//					couponService.updateCoupon(coupon);
-//				} catch (NoAccessException e) {
-//					System.out.println(e.getMessage());
-//				}
-//				try {
-//					Coupon coupon = couponService.getOneCouponByID(coupontest1.getId());
-//					coupon.setcompanyID(124);
-//					
-//					couponService.updateCoupon(coupon);
-//				} catch (NoAccessException e) {
-//					System.out.println(e.getMessage());
-//				}
-//				System.out.println();
-//				
-//				System.out.println("~~~trying to change title.~~~");
-//				System.out.println("BEFORE");
-//				System.out.println(couponService.getOneCouponByID(coupontest1.getId()));
-//				Coupon coupon = couponService.getOneCouponByID(coupontest1.getId());
-//				coupon.setTitle("sadfghsdagdasdsggdasadsgadsgasdg");
-//				couponService.updateCoupon(coupon);
-//				System.out.println("AFTER");
-//				System.out.println(couponService.getOneCouponByID(coupontest1.getId()));
-//				System.out.println("Title Changed.");
+				// Setting the added coupons to porsche Company
+				System.out.println("*******Porsche Company Details*******");
+				System.out.println("~~~Injecting coupons to company~~~");
+				List<Coupon> porscheCoupons = Arrays.asList(porscheCoupon1,porscheCoupon2);
+				porche.setCoupons(porscheCoupons);
+				admin.updateCompany(porche);
+				System.out.println(porche);
 				
 				
-//				// delete purchased coupons history
-//				System.out.println("*******company facade - delete coupon test*******");
-//				colaCompany.deleteCoupon(8);
-//				System.out.println();
+				// updateCoupon method
+				System.out.println("*******company facade - cant change company and coupon ID*******");
+				System.out.println("~~~trying to change coupon id.~~~");
+				System.out.println(couponService.getOneCouponByID(porscheCoupon1.getId()));
+				try {
+					Coupon coupon = couponService.getOneCouponByID(porscheCoupon1.getId());
+					coupon.setcompanyID(124);
+					
+					couponService.updateCoupon(coupon);
+				} catch (NoAccessException e) {
+					System.out.println(e.getMessage());
+				}
+				try {
+					Coupon coupon = couponService.getOneCouponByID(porscheCoupon1.getId());
+					coupon.setId(21312321);
+					
+					couponService.updateCoupon(coupon);
+				} catch (NoAccessException e) {
+					System.out.println(e.getMessage());
+				}
+				System.out.println();
+				
+				System.out.println("~~~trying to change title.~~~");
+				System.out.println("BEFORE");
+				System.out.println(couponService.getOneCouponByID(porscheCoupon1.getId()));
+				Coupon coupon = couponService.getOneCouponByID(porscheCoupon1.getId());
+				coupon.setTitle("sadfghsdagdasdsggdasadsgadsgasdg");
+				couponService.updateCoupon(coupon);
+				System.out.println("AFTER");
+				System.out.println(couponService.getOneCouponByID(porscheCoupon1.getId()));
+				System.out.println("Title Changed.");
+				System.out.println();
+				
+				
+				// delete purchased coupons history
+				System.out.println("*******company facade - delete coupon test*******");
+				companyFacadeService.deleteCoupon(porscheCoupon2.getId());
+				System.out.println();
 
 				// get all coupons from current company login
-//				System.out.println("*******company facade - get all coupons by company*******");
-//				System.out.println(couponService.getCouponsByCompanyID(colaCompany.));
-//				System.out.println();
+				System.out.println("*******company facade - get all coupons by company*******");
+				// TODO check how to get coupons from company without giving it the ID
+				//	System.out.println(companyFacadeService.getCompanyCoupons());
+				System.out.println(couponService.getCouponsByCompanyID(porche.getId()));
+				System.out.println();
 
 //				// get all coupons from specific category
-//				System.out.println("*******company facade - get all coupons by category*******");
-//				System.out.println("Available coupons :");
-//				System.out.println(colaCompany.getCompanyCouponsByCategory(Category.FOOD));
-//				System.out.println("None Available coupons :");
-//				System.out.println(colaCompany.getCompanyCouponsByCategory(Category.ESPORTS));
-//				System.out.println();
-//
-//				// get all coupons of company till maxprice
-//				System.out.println("*******company facade - get all coupon by max price*******");
-//				System.out.println("Available price");
-//				System.out.println(colaCompany.getCompanyCouponsByMaxPrice(50));
-//				System.out.println();
-//				System.out.println("None Available price");
-//				System.out.println(colaCompany.getCompanyCouponsByMaxPrice(1.99));
-//				System.out.println();
-//
-//				// get company info
-//				// FOR SOME REASON RETURNS ALSO DETAILS WITH NULL
-//				System.out.println("*******company facade - get company info*******");
-//				System.out.println(colaCompany.getCompanyDetails());
-//				System.out.println();
+				System.out.println("*******company facade - get all coupons by category*******");
+				System.out.println("Available coupons :");
+				System.out.println(porscheCompany.getCompanyCouponsByCategory(Category.CARS, 10));
+				System.out.println("None Available coupons :");
+				System.out.println(porscheCompany.getCompanyCouponsByCategory(Category.ESPORTS, 10));
+				System.out.println();
+
+				// get all coupons of company till maxprice
+				// TODO fix this method.
+				System.out.println("*******company facade - get all coupon by max price*******");
+				System.out.println("Available price");
+				System.out.println(porscheCompany.getCompanyCouponsByMaxPrice(2000, 10));
+				System.out.println();
+				System.out.println("None Available price");
+				System.out.println(porscheCompany.getCompanyCouponsByMaxPrice(10, 10));
+				System.out.println();
+
+				// get company info
+				// TODO throws spring Exception tha id = 0
+				System.out.println("*******company facade - get company info*******");
+		//		System.out.println(porscheCompany.getCompanyDetails());
+				System.out.println();
 		
 
 	}

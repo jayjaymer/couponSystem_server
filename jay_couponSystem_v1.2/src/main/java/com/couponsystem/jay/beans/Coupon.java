@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.couponsystem.jay.exceptions.NoAccessException;
@@ -49,6 +50,9 @@ public class Coupon {
 	private double price;
 	@Column(nullable = false)
 	private String image;
+
+	
+	
 	@Override
 	public String toString() {
 		return "Coupon #"+ id + ", companyID=" + companyID + ", category=" + category + ", title=" + title

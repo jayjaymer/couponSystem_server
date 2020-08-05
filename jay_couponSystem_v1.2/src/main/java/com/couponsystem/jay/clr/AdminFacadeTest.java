@@ -14,8 +14,8 @@ import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.util.Print;
 
-//@Component
-//@Order(value = 4)
+@Component
+@Order(value = 4)
 public class AdminFacadeTest implements CommandLineRunner {
 	@Autowired
 	private AdminFacadeService admin;
@@ -239,6 +239,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 				System.out.println();
 				
 //				// Delete customer coupon purchase
+				// TODO
 				System.out.println("*******admin facade - deleting customer purchased coupons.*******");
 //				admin.dele
 //				System.out.println();

@@ -18,7 +18,7 @@ public class AdminFacadeService extends ClientFacadeService {
 	protected CompanyService companyService = new CompanyService();
 	@Autowired
 	protected CustomerService customerService = new CustomerService();
-	protected CouponService couponService = new CouponService();
+	
 
 	@Override
 	public boolean login(String email, String password) {

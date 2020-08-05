@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.beans.Customer;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.repo.CustomerRepository;
@@ -59,11 +60,16 @@ public class CustomerService {
 		}
 	}
 
-//	public Customer getOneCustomerByEmailAndPassword(String email, String password) {
-//		return repo.findCustomerByEmailAndPassword(email, password);
-//	}
+	public Customer getOneCustomerByEmailAndPassword(String email, String password) {
+		if (repo.findByEmailAndPassword(email, password)==null) {
+		}
+		return repo.findByEmailAndPassword(email, password);
+	}
 	
 	//10%
 	// get the customer coupons.
+	public List<Coupon> getAllPurchasedCoupons(){
+		return repo.getCustomersVsCoupons();
+	}
 	
 }

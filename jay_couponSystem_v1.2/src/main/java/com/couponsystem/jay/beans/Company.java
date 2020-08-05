@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,7 +39,8 @@ public class Company {
 	private String password;
 //	@OneToMany(targetEntity = Coupon.class,cascade = CascadeType.ALL)
 //	@JoinColumn(name = "companyID",referencedColumnName = "id")
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	//@JoinColumn(name = "company_fk", referencedColumnName = "id",)
 	private List<Coupon> coupons;
 	
 	@Override

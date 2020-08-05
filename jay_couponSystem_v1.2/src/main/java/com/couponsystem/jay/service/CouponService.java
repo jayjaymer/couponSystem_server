@@ -56,9 +56,6 @@ public class CouponService {
 	}
 
 	public List<Coupon> getCouponsByCompanyID(int companyID) throws NotFoundException{
-		if ( repo.findByCompanyID(companyID)== null) {
-			throw new NotFoundException("No coupons for this company.");
-		}
 		return repo.findByCompanyID(companyID);
 	}
 	
@@ -88,7 +85,7 @@ public class CouponService {
 	}
 	
 	public void deletePurchasedCouponByCouponID(int couponID) {
-		repo.deletePurchase(couponID);
+		repo.deleteCompanyCoupons(couponID);
 	}
 	
 

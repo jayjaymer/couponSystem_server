@@ -17,7 +17,7 @@ import com.couponsystem.jay.repo.CustomerRepository;
 import com.couponsystem.jay.util.DateUtil;
 
 //@Component
-//@Order(value = 6)
+//@Order(value = 7)
 public class oneTomanyTest implements CommandLineRunner {
 	@Autowired
 	private CustomerRepository repo;
@@ -70,7 +70,8 @@ public class oneTomanyTest implements CommandLineRunner {
 		repo.save(customer1);
 		
 		System.out.println(cps);
-		repo.delete(customer1);
+		
+//		repo.delete(customer1);
 		
 
 	}

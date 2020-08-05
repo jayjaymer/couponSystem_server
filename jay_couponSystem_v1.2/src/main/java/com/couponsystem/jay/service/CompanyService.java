@@ -1,6 +1,7 @@
 package com.couponsystem.jay.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,6 +16,7 @@ import com.couponsystem.jay.repo.CompanyRepository;
 @Scope("prototype")
 public class CompanyService {
 	private Company companyTest;
+	
 	
 	@Autowired
 	private CompanyRepository repo;
