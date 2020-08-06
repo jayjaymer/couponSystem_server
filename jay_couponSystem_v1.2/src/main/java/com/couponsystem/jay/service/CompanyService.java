@@ -1,87 +1,74 @@
 package com.couponsystem.jay.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Company;
-import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.repo.CompanyRepository;
 
 @Service
 @Scope("prototype")
 public class CompanyService {
-	private Company companyTest;
-	
-	
+
 	@Autowired
 	private CompanyRepository repo;
-	
-	//50%
+
+	// 50%
 	public void addCompany(Company company) {
 		repo.save(company);
 	}
-	
+
 	public void updateCompany(Company company) throws NotFoundException {
-//		if (repo.saveAndFlush(company)!=null) {
-			repo.saveAndFlush(company);
-//		}else {
-//			throw new NotFoundException("Company does not exists");
-//		}
+		repo.saveAndFlush(company);
 	}
+
 	public void deleteCompany(int companyID) {
 		repo.deleteById(companyID);
 	}
+
 	public List<Company> getAllCompanies() {
-		if ( repo.findAll() != null) {
-			
+		if (repo.findAll() != null) {
+
 		}
 		return repo.findAll();
 	}
+
 	public Company getOneCompanyByID(int companyID) throws NotFoundException {
-		if (repo.getOne(companyID) !=null ) {
+		if (repo.getOne(companyID) != null) {
 			return repo.getOne(companyID);
-		}else {
+		} else {
 			throw new NotFoundException("Company not found!");
-			
+
 		}
 	}
-	
-	//40%
+
+	// 40%
+
 	public boolean checkIfCompany(String email, String password) {
-		if (repo.findByEmailAndPassword(email,password) != null) {
+		if (repo.findByEmailAndPassword(email, password) != null) {
 			return true;
-		}else {
-			
+		} else {
+
 			return false;
 		}
 	}
-	
+
 	public Company findCompanyByID(int companyID) throws NotFoundException {
-		if (repo.findById(companyID)!=null) {
+		if (repo.findById(companyID) != null) {
 			return repo.findById(companyID);
-		}else {
+		} else {
 			throw new NotFoundException("Company id not found");
 		}
 	}
-	
+
 	public Company findCompanyByEmailAndPassword(String email, String password) {
-		if (repo.findByEmailAndPassword(email, password)==null) {
+		if (repo.findByEmailAndPassword(email, password) == null) {
 		}
 		return repo.findByEmailAndPassword(email, password);
 	}
-	
 
-	
-	// 10%
-	// get the company coupons.
-//	public List<Coupon> getCompanyCoupons(){
-//		return repo.findAll();
-//	}
-	
-	
 }

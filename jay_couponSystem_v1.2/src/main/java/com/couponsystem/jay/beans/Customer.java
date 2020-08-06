@@ -8,12 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.couponsystem.jay.exceptions.AlreadyExistsException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 
 import lombok.AccessLevel;
@@ -41,14 +38,7 @@ public class Customer {
 	private String email;
 	@Column(nullable = false)
 	private String password;
-	
-//	@OneToMany(targetEntity = Coupon.class,cascade = CascadeType.ALL)
-//	@JoinColumn(name = "customerID",referencedColumnName = "id")
-
-	//	@OneToMany
-//	@JoinTable(name = "customer_vs_coupons")
 	@OneToMany(targetEntity = Coupon.class,cascade = CascadeType.ALL)
-	//@JoinColumn(name = "customer_fk",referencedColumnName = "id")
 	private List<Coupon> coupons;
 
 	@Override

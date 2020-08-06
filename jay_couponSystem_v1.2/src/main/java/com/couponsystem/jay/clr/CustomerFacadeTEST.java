@@ -1,8 +1,6 @@
 package com.couponsystem.jay.clr;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -30,12 +28,9 @@ public class CustomerFacadeTEST implements CommandLineRunner {
 	@Autowired
 	AdminFacadeService admin;
 	@Autowired
-	private CustomerFacadeService customerFacadeService;
-	@Autowired
 	private CouponService couponService;
 	@Autowired
 	private LoginManager managerLogin;
-	private int customerID;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -44,30 +39,8 @@ public class CustomerFacadeTEST implements CommandLineRunner {
 		System.out.println();
 		Print print = new Print();
 		
-//		Coupon coupon1 = Coupon.builder()
-//				.companyID(1)
-//				.category(Category.RESTAURANTS)
-//				.title("asdgo")
-//				.description("dasg")
-//				.startDate(DateUtil.changeDateType(new Date(2020,1,1)))
-//				.endDate(DateUtil.changeDateType(new Date(2020, 9, 10)))
-//				.amount(10)
-//				.price(4.99)
-//				.image("asas")
-//				.build();
-//		
-//		Coupon coupon2 = Coupon.builder()
-//				.companyID(1)
-//				.category(Category.RESTAURANTS)
-//				.title("assa")
-//				.description("dsdsd")
-//				.startDate(DateUtil.changeDateType(new Date(2020,1,1)))
-//				.endDate(DateUtil.changeDateType(new Date(2020, 9, 10)))
-//				.amount(10)
-//				.price(4.99)
-//				.image("rerewq")
-//				.build();
-//		List<Coupon> coupons = Arrays.asList(coupon1, coupon2);
+		
+		// creating customer
 		Customer Eugene = Customer.builder()
 				.firstName("Eugene")
 				.lastName("Merc")
@@ -100,7 +73,6 @@ public class CustomerFacadeTEST implements CommandLineRunner {
 					System.out.println("*real info test*");
 					eugeneCustomer = (CustomerFacadeService) managerLogin.login("eugene@gmail.com", "123",
 							ClientType.CUSTOMER);
-					//eugeneCustomer.setCustomerID(1);
 				} catch (LoginFailledException e) {
 					System.out.println(e.getMessage());
 				}
@@ -108,7 +80,6 @@ public class CustomerFacadeTEST implements CommandLineRunner {
 				System.out.println("######### EUGENE INFO #########");
 				System.out.println(eugeneCustomer.getCustomerService().findCustomerByID(Eugene.getId()));
 				eugeneCustomer.setCustomerID(11);
-				//System.out.println(customerFacadeService.getCustomerService().getAllPurchasedCoupons());
 				
 				/***
 				 * 
@@ -208,17 +179,49 @@ public class CustomerFacadeTEST implements CommandLineRunner {
 				System.out.println("*******customer facade - get customer details*******");
 				System.out.println(eugeneCustomer.getCustomerDetails());
 				System.out.println();
-//				TODO DAILY JOB
-//				// adding expired coupons to test daily job thread.
-//				couponsDAO.addCoupon(cJob1);
-//				couponsDAO.addCoupon(cJob2);
-//				couponsDAO.addCoupon(cJob3);
-//				couponsDAO.addCouponPurchase(3, 12);
-//				couponsDAO.addCouponPurchase(4, 13);
-//				couponsDAO.addCouponPurchase(5, 14);
-//
-//				
+				
+//				// adding 2 expired coupons to test daily job thread.
+				Coupon cJob1 = Coupon.builder()
+						.companyID(8)
+						.category(Category.VACATION)
+						.title("Test Expired title 1")
+						.description("Expired Coupon test ")
+						.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
+						.endDate(DateUtil.changeDateType(new Date(2020,5,5)))
+						.amount(8)
+						.price(8)
+						.image("http://test1")
+						.build();
+				
+				Coupon cJob2 = Coupon.builder()
+						.companyID(8)
+						.category(Category.VACATION)
+						.title("Test Expired title 2")
+						.description("Expired Coupon test ")
+						.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
+						.endDate(DateUtil.changeDateType(new Date(2020,5,5)))
+						.amount(8)
+						.price(8)
+						.image("http://test2")
+						.build();
+				
+				couponService.addCoupon(cJob1);
+				couponService.addCoupon(cJob2);
+				// Added two coupons
+				
+				// Adding purchased coupons
+				couponService.addPurchaseCoupon(3, 6);
+				couponService.addPurchaseCoupon(4, 4);
+				couponService.addPurchaseCoupon(4, 5);
+				couponService.addPurchaseCoupon(6, 7);
+				// Added 4 purchased coupons
+				
+				System.out.println();
+				System.out.println();
 				print.endPrint(null);
+				System.out.println();
+				System.out.println();
+				System.out.println();
 	
 		
 	}

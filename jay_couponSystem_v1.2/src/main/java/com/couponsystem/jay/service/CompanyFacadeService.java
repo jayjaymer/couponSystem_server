@@ -3,7 +3,6 @@ package com.couponsystem.jay.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -15,26 +14,21 @@ import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 @Service
 @Scope("prototype")
-@ToString
 public class CompanyFacadeService extends ClientFacadeService {
-	
+
 	private int companyID;
 
 	@Override
 	public boolean login(String email, String password) throws LoginFailledException, NotFoundException {
 		System.out.println(email + " " + password);
-			if (companyService.findCompanyByEmailAndPassword(email, password)== null) {
-				throw new LoginFailledException();
-			}
-				System.out.println("Company logged in");
-				return true;
+		if (companyService.findCompanyByEmailAndPassword(email, password) == null) {
+			throw new LoginFailledException();
 		}
+		System.out.println("Company logged in");
+		return true;
+	}
 
 	/**
 	 * on this method the company is creating new coupon ONLY IF : the new coupon is
@@ -61,8 +55,8 @@ public class CompanyFacadeService extends ClientFacadeService {
 	// cant update coupon id or company id
 	public void updateCoupon(Coupon coupon) throws NoAccessException, NotFoundException {
 		int companyCoupon = couponService.getOneCouponByID(coupon.getId()).getCompanyID();
-		
-		if (companyCoupon!= coupon.getCompanyID()) {
+
+		if (companyCoupon != coupon.getCompanyID()) {
 			throw new NoAccessException("No access to change company ID");
 		}
 
@@ -71,41 +65,37 @@ public class CompanyFacadeService extends ClientFacadeService {
 	}
 
 	// to delete coupon most delete all connections to the coupon
-		public void deleteCoupon(int couponID) {
-			List<Coupon> coupons = couponService.getAllCoupons();
-			for (Coupon coupon : coupons) {
-				if (coupon.getId() == couponID) {
-					System.out.println("deleting purchase history ");
-					couponService.deletePurchasedCouponByCouponID(couponID);
-					System.out.println("deleted.");
-				}
+	public void deleteCoupon(int couponID) {
+		List<Coupon> coupons = couponService.getAllCoupons();
+		for (Coupon coupon : coupons) {
+			if (coupon.getId() == couponID) {
+				System.out.println("deleting purchase history ");
+				couponService.deletePurchasedCouponByCouponID(couponID);
+				System.out.println("deleted.");
 			}
-			couponService.deleteCoupon(couponID);
 		}
+		couponService.deleteCoupon(couponID);
+	}
 
 	// get all the coupons of the connected company
-		public List<Coupon> getCompanyCoupons() throws  NotFoundException {
+	public List<Coupon> getCompanyCoupons() throws NotFoundException {
 
-			if (couponService.getCouponsByCompanyID(companyID) != null) {
-				return couponService.getCouponsByCompanyID(companyID);
-			} else {
-				throw new NotFoundException("no coupons found for this company!");
-			}
-		}
+		return companyService.findCompanyByID(companyID).getCoupons();
+	}
 
 	// get all the coupons of the connected company by category
-	public List<Coupon> getCompanyCouponsByCategory(Category category, int companyID) {
+	public List<Coupon> getCompanyCouponsByCategory(Category category) throws NotFoundException {
 		List<Coupon> result = new ArrayList<Coupon>();
-		List<Coupon> coupons = couponService.getAllCoupons();
+		List<Coupon> coupons = companyService.findCompanyByID(companyID).getCoupons();
 
 		if (coupons != null) {
 			for (Coupon coupon : coupons) {
-				if (coupon.getCategory().equals(category) && coupon.getCompanyID() == companyID) {
+				if (coupon.getCategory().equals(category)) {
 					result.add(coupon);
 				}
 			}
 			if (result.isEmpty() == true) {
-				System.out.println("no coupons");
+				System.out.println("No Coupons for this Category!");
 			}
 		}
 		return result;
@@ -113,33 +103,29 @@ public class CompanyFacadeService extends ClientFacadeService {
 	}
 
 	// get all the coupons of the connected company by max price
-		public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice, int companyID) {
-			List<Coupon> result = new ArrayList<Coupon>();
-			List<Coupon> coupons = couponService.getAllCoupons();
-			for (Coupon coupon : coupons) {
-				if (coupon.getPrice() <= maxPrice) {
-					result.add(coupon);
+	public List<Coupon> getCompanyCouponsByMaxPrice(double maxPrice) throws NotFoundException {
+		List<Coupon> result = new ArrayList<Coupon>();
+		List<Coupon> coupons = companyService.findCompanyByID(companyID).getCoupons();
+		for (Coupon coupon : coupons) {
+			if (coupon.getPrice() <= maxPrice) {
+				result.add(coupon);
 
-				}
 			}
-			if (result.isEmpty() == true) {
-				System.out.println("no coupons for this price");
-			}
-			return result;
 		}
+		if (result.isEmpty() == true) {
+			System.out.println("no coupons for this price");
+		}
+		return result;
+	}
 
 	// get all company info including coupons
-	public Company getCompanyDetails() throws NotFoundException  {
-			Company companies = companyService.getOneCompanyByID(this.companyID);
-			return companies;
-		}
+	public Company getCompanyDetails() throws NotFoundException {
+		Company companies = companyService.findCompanyByID(companyID);
+		return companies;
+	}
 
-	// just a getter for client facade company login
-//	public int getCompanyID(String email, String password) throws NotFoundException {
-//		Company company = companyService.getOneCompanyByEmailAndPassword(email, password);
-//
-//		return company.getId();
-//	}
-
+	public void setCompanyID(int companyID) {
+		this.companyID = companyID;
+	}
 
 }

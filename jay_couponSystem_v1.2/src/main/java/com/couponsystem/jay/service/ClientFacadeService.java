@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Service
-@Data
+@Getter
 public abstract class ClientFacadeService {
 	
 	@Autowired

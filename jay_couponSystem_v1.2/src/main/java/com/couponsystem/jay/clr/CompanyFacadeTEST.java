@@ -1,6 +1,5 @@
 package com.couponsystem.jay.clr;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -16,14 +15,13 @@ import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.exceptions.AlreadyExistsException;
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
-import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.login.ClientType;
 import com.couponsystem.jay.login.LoginManager;
-import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.service.CompanyFacadeService;
 import com.couponsystem.jay.service.CompanyService;
 import com.couponsystem.jay.service.CouponService;
 import com.couponsystem.jay.util.DateUtil;
+
 @Component
 @Order(value = 5)
 public class CompanyFacadeTEST implements CommandLineRunner {
@@ -82,6 +80,7 @@ public class CompanyFacadeTEST implements CommandLineRunner {
 				System.out.println();
 				System.out.println("$$$$$$$$ PROSCHE INFO $$$$$$$$");
 				System.out.println(porscheCompany.getCompanyService().findCompanyByID(porche.getId()));
+				porscheCompany.setCompanyID(12);
 				System.out.println();
 
 				// add company if title is not the same as other coupons
@@ -150,7 +149,7 @@ public class CompanyFacadeTEST implements CommandLineRunner {
 				
 				// updateCoupon method
 				System.out.println("*******company facade - cant change company and coupon ID*******");
-				System.out.println("~~~trying to change coupon id.~~~");
+				System.out.println("~~~ trying to change company and coupon id. ~~~");
 				System.out.println(couponService.getOneCouponByID(porscheCoupon1.getId()));
 				try {
 					Coupon coupon = couponService.getOneCouponByID(porscheCoupon1.getId());
@@ -189,33 +188,29 @@ public class CompanyFacadeTEST implements CommandLineRunner {
 
 				// get all coupons from current company login
 				System.out.println("*******company facade - get all coupons by company*******");
-				// TODO check how to get coupons from company without giving it the ID
-				//	System.out.println(companyFacadeService.getCompanyCoupons());
-				System.out.println(couponService.getCouponsByCompanyID(porche.getId()));
+				System.out.println(porscheCompany.getCompanyCoupons());
 				System.out.println();
 
 //				// get all coupons from specific category
 				System.out.println("*******company facade - get all coupons by category*******");
 				System.out.println("Available coupons :");
-				System.out.println(porscheCompany.getCompanyCouponsByCategory(Category.CARS, 10));
+				System.out.println(porscheCompany.getCompanyCouponsByCategory(Category.CARS));
 				System.out.println("None Available coupons :");
-				System.out.println(porscheCompany.getCompanyCouponsByCategory(Category.ESPORTS, 10));
+				System.out.println(porscheCompany.getCompanyCouponsByCategory(Category.ESPORTS));
 				System.out.println();
 
 				// get all coupons of company till maxprice
-				// TODO fix this method.
 				System.out.println("*******company facade - get all coupon by max price*******");
 				System.out.println("Available price");
-				System.out.println(porscheCompany.getCompanyCouponsByMaxPrice(2000, 10));
+				System.out.println(porscheCompany.getCompanyCouponsByMaxPrice(2000));
 				System.out.println();
 				System.out.println("None Available price");
-				System.out.println(porscheCompany.getCompanyCouponsByMaxPrice(10, 10));
+				System.out.println(porscheCompany.getCompanyCouponsByMaxPrice(10));
 				System.out.println();
 
 				// get company info
-				// TODO throws spring Exception tha id = 0
 				System.out.println("*******company facade - get company info*******");
-		//		System.out.println(porscheCompany.getCompanyDetails());
+				System.out.println(porscheCompany.getCompanyDetails());
 				System.out.println();
 		
 

@@ -13,6 +13,8 @@ import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CouponService;
 import com.couponsystem.jay.util.DateUtil;
 import com.couponsystem.jay.util.Print;
+
+
 @Component
 @Order(value = 2)
 public class CouponCRUDTest implements CommandLineRunner {
@@ -148,7 +150,6 @@ public class CouponCRUDTest implements CommandLineRunner {
 				.image("http://test9")
 				.build();
 				
-		
 		couponService.addCoupon(coupon1);
 		couponService.addCoupon(coupon2);
 		couponService.addCoupon(coupon3);

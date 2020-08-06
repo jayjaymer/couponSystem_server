@@ -3,7 +3,6 @@ package com.couponsystem.jay.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
@@ -12,8 +11,6 @@ import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.service.ClientFacadeService;
 import com.couponsystem.jay.service.CompanyFacadeService;
 import com.couponsystem.jay.service.CustomerFacadeService;
-
-import lombok.Data;
 
 @Component
 @Lazy
@@ -27,7 +24,7 @@ public class LoginManager {
 	private CompanyFacadeService companyFacadeService;
 
 	private LoginManager() {
-
+		super();
 	}
 
 	public ClientFacadeService login(String email, String password, ClientType clientType) throws NotFoundException, NoAccessException , LoginFailledException {

@@ -15,38 +15,34 @@ import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
 @Service
-public class CustomerFacadeService extends ClientFacadeService{
+public class CustomerFacadeService extends ClientFacadeService {
 
 	Customer customer;
 	private int customerID;
-	
-	
+
 	@Override
 	public boolean login(String email, String password) throws LoginFailledException {
-			System.out.println(email + " " + password);
-			if (customerService.getOneCustomerByEmailAndPassword(email, password)==null) {
-				throw new LoginFailledException();
-			}
-			System.out.println("Customer logged in.");
-			return true;
+		System.out.println(email + " " + password);
+		if (customerService.getOneCustomerByEmailAndPassword(email, password) == null) {
+			throw new LoginFailledException();
+		}
+		System.out.println("Customer logged in.");
+		return true;
 	}
-	
-	
+
 	/**
 	 * on this method the customer is purchasing a coupon ONLY IF : the coupon is
 	 * NOT purchased by the same customer the amount of the coupon is NOT 0 the
 	 * coupon is NOT expired. AFTER A purchase is made, amount decreased by 1.
 	 * 
 	 * @param coupon - insert a coupon to Database
-	 * @throws NotFoundException 
+	 * @throws NotFoundException
 	 * @throws CouponPurchaseException - if one of the conditions not passed
 	 */
-	
-	
-	public void purchaseCoupon(Coupon coupon) throws NoAccessException,AlreadyExistsException, NotFoundException {
-		
+
+	public void purchaseCoupon(Coupon coupon) throws NoAccessException, AlreadyExistsException, NotFoundException {
+
 		// not allowed to buy a purchased coupon.
-	//	List<Coupon> purchased = customerService.getAllPurchasedCoupons();
 		Customer customer = customerService.findCustomerByID(customerID);
 		List<Coupon> coupons = customer.getCoupons();
 		for (Coupon couponz : coupons) {
@@ -76,49 +72,49 @@ public class CustomerFacadeService extends ClientFacadeService{
 		System.out.println("coupon was purchased.");
 
 	}
-	
-	// get all the coupons of the connected to the customer
-		public List<Coupon> getCustomerCoupons() throws NotFoundException  {
-			return customerService.findCustomerByID(customerID).getCoupons();
-		}
-		
-	// get all the coupons of the connected to the customer by category
-		public List<Coupon> getCustoCouponsByCategory(Category category) throws NotFoundException {
-			List<Coupon> getall = new ArrayList<Coupon>();
-			List<Coupon> cVc = customerService.findCustomerByID(customerID).getCoupons();
-			for (Coupon cVcS : cVc) {
-				if (cVcS.getCategory() == category) {
-					getall.add(cVcS);
-				}
-			}
-			if (getall.isEmpty()) {
-				throw new NotFoundException("No Coupons for this Category!");
-			}
-			return getall;
-		}
-		
-		// get all the coupons of the connected to the customer by max price
-		public List<Coupon> getCutomerCouponsByMaxPrice(double maxPrice) throws NotFoundException {
-			List<Coupon> getall = new ArrayList<Coupon>();
-			List<Coupon> cVc = customerService.findCustomerByID(customerID).getCoupons();
-			for (Coupon cVcS : cVc) {
-				if (cVcS.getPrice() <= maxPrice) {
-					getall.add(cVcS);
-				}
-			}
 
-			if (getall.isEmpty()) {
-				throw new NotFoundException("No coupons for this price.");
+	// get all the coupons of the connected to the customer
+	public List<Coupon> getCustomerCoupons() throws NotFoundException {
+		return customerService.findCustomerByID(customerID).getCoupons();
+	}
+
+	// get all the coupons of the connected to the customer by category
+	public List<Coupon> getCustoCouponsByCategory(Category category) throws NotFoundException {
+		List<Coupon> getall = new ArrayList<Coupon>();
+		List<Coupon> cVc = customerService.findCustomerByID(customerID).getCoupons();
+		for (Coupon cVcS : cVc) {
+			if (cVcS.getCategory() == category) {
+				getall.add(cVcS);
 			}
-			return getall;
 		}
-		
-		// get all details of customer including coupons purchased by him
-		public Customer getCustomerDetails() throws NotFoundException {
-			Customer customer = customerService.findCustomerByID(customerID);
-			return customer;
-		}	
-	
+		if (getall.isEmpty()) {
+			throw new NotFoundException("No Coupons for this Category!");
+		}
+		return getall;
+	}
+
+	// get all the coupons of the connected to the customer by max price
+	public List<Coupon> getCutomerCouponsByMaxPrice(double maxPrice) throws NotFoundException {
+		List<Coupon> getall = new ArrayList<Coupon>();
+		List<Coupon> cVc = customerService.findCustomerByID(customerID).getCoupons();
+		for (Coupon cVcS : cVc) {
+			if (cVcS.getPrice() <= maxPrice) {
+				getall.add(cVcS);
+			}
+		}
+
+		if (getall.isEmpty()) {
+			throw new NotFoundException("No coupons for this price.");
+		}
+		return getall;
+	}
+
+	// get all details of customer including coupons purchased by him
+	public Customer getCustomerDetails() throws NotFoundException {
+		Customer customer = customerService.findCustomerByID(customerID);
+		return customer;
+	}
+
 	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
