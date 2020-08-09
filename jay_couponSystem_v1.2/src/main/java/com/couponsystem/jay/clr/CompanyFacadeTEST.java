@@ -22,8 +22,8 @@ import com.couponsystem.jay.service.CompanyService;
 import com.couponsystem.jay.service.CouponService;
 import com.couponsystem.jay.util.DateUtil;
 
-@Component
-@Order(value = 5)
+//@Component
+//@Order(value = 5)
 public class CompanyFacadeTEST implements CommandLineRunner {
 	@Autowired
 	private CompanyFacadeService companyFacadeService;

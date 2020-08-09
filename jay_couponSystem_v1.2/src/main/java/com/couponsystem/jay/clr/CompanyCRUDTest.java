@@ -20,17 +20,17 @@ public class CompanyCRUDTest implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		Print print = new Print();
-		System.out.println();
-		print.companyTEST(null);
-		System.out.println();
-		
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~COMPANY DUMMY TEST~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println(); 
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		
+//		Print print = new Print();
+//		System.out.println();
+//		print.companyTEST(null);
+//		System.out.println();
+//		
+//		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~COMPANY DUMMY TEST~~~~~~~~~~~~~~~~~~~~~~~");
+//		System.out.println(); 
 		System.out.println("****Adding Companies****");
 		
 		Company c1 = Company.builder()
@@ -99,51 +99,51 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		companyService.addCompany(c8);
 		companyService.addCompany(c9);
 		System.out.println("*Companies are added.*");
-		System.out.println();
-		
-		// UPDATE COMPANY
-		System.out.println("****Updating Company****");
-		System.out.print("Company9 name before update : "+c9.getName());
-		c9.setName("asdhsdhafdshfdshsfdhsdf");
-		companyService.updateCompany(c9);
-		System.out.println();
-		System.out.println("Company9 name after update : "+c9.getName());
-		System.out.println(companyService.getOneCompanyByID(9));
-		System.out.println();
-		
-		// DELETE COMPANY
-		System.out.println("****Company DELETE****");
-		System.out.println("Removing company ID 9");
-		companyService.deleteCompany(9);
-		System.out.println("Company  Deleted");
-		System.out.println();
-		
-		// GET ALL COMPANIES
-		System.out.println("****Companies Registered****");
-		System.out.println(companyService.getAllCompanies());
-		System.out.println();
-		
-		// GET ONE COMPANY
-		System.out.println("****Get one registerd Company By ID****");
-		System.out.println("real info test");
-		System.out.println(companyService.findCompanyByID(2));
-		System.out.println("fake info test");
-		try {
-			companyService.findCompanyByID(55);
-		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println();
-		
-		// IS COMPANY EXISTS
-		System.out.println("****Company Existence ****");
-		System.out.println("real info test");
-		System.out.println(companyService.checkIfCompany("cola@gmail.com", "1234"));
-		System.out.println("fake info test");
-		System.out.println(companyService.checkIfCompany("asdgadsgdsagasd@gmail.com", "1234"));
-		System.out.println();
-		
-	
+//		System.out.println();
+//		
+//		// UPDATE COMPANY
+//		System.out.println("****Updating Company****");
+//		System.out.print("Company9 name before update : "+c9.getName());
+//		c9.setName("asdhsdhafdshfdshsfdhsdf");
+//		companyService.updateCompany(c9);
+//		System.out.println();
+//		System.out.println("Company9 name after update : "+c9.getName());
+//		System.out.println(companyService.getOneCompanyByID(9));
+//		System.out.println();
+//		
+//		// DELETE COMPANY
+//		System.out.println("****Company DELETE****");
+//		System.out.println("Removing company ID 9");
+//		companyService.deleteCompany(9);
+//		System.out.println("Company  Deleted");
+//		System.out.println();
+//		
+//		// GET ALL COMPANIES
+//		System.out.println("****Companies Registered****");
+//		System.out.println(companyService.getAllCompanies());
+//		System.out.println();
+//		
+//		// GET ONE COMPANY
+//		System.out.println("****Get one registerd Company By ID****");
+//		System.out.println("real info test");
+//		System.out.println(companyService.findCompanyByID(2));
+//		System.out.println("fake info test");
+//		try {
+//			companyService.findCompanyByID(55);
+//		} catch (NotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+//		System.out.println();
+//		
+//		// IS COMPANY EXISTS
+//		System.out.println("****Company Existence ****");
+//		System.out.println("real info test");
+//		System.out.println(companyService.checkIfCompany("cola@gmail.com", "1234"));
+//		System.out.println("fake info test");
+//		System.out.println(companyService.checkIfCompany("asdgadsgdsagasd@gmail.com", "1234"));
+//		System.out.println();
+//		
+//	
 
 		
 		

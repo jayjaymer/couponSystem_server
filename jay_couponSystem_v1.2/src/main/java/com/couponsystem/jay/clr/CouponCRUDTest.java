@@ -15,8 +15,8 @@ import com.couponsystem.jay.util.DateUtil;
 import com.couponsystem.jay.util.Print;
 
 
-@Component
-@Order(value = 2)
+//@Component
+//@Order(value = 2)
 public class CouponCRUDTest implements CommandLineRunner {
 	
 	@Autowired

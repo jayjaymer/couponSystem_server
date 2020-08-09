@@ -10,8 +10,8 @@ import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CustomerService;
 import com.couponsystem.jay.util.Print;
 
-@Component
-@Order(value = 3)
+//@Component
+//@Order(value = 3)
 public class CustomerCRUDTest implements CommandLineRunner {
 	@Autowired
 	CustomerService customerService;

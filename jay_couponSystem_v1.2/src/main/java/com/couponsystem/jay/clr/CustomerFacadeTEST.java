@@ -22,8 +22,8 @@ import com.couponsystem.jay.service.CustomerFacadeService;
 import com.couponsystem.jay.util.DateUtil;
 import com.couponsystem.jay.util.Print;
 
-@Component
-@Order(value = 6)
+//@Component
+//@Order(value = 6)
 public class CustomerFacadeTEST implements CommandLineRunner {
 	@Autowired
 	AdminFacadeService admin;
@@ -170,9 +170,17 @@ public class CustomerFacadeTEST implements CommandLineRunner {
 				} catch (NotFoundException e) {
 					System.out.println(e.getMessage());
 				}
+				try {
+					System.out.println("*real test info*");
+					System.out.println(eugeneCustomer.getCutomerCouponsByMaxPrice(10001));
+					System.out.println();
+				} catch (NotFoundException e) {
+					System.out.println(e.getMessage());
+				}
 				System.out.println();
-				System.out.println("*real test info*");
-				System.out.println(eugeneCustomer.getCutomerCouponsByMaxPrice(50));
+				
+				
+				
 				System.out.println();
 
 				// get all customer details.

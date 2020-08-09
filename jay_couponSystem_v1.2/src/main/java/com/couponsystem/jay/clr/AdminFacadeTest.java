@@ -2,8 +2,6 @@ package com.couponsystem.jay.clr;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import com.couponsystem.jay.beans.Company;
 import com.couponsystem.jay.beans.Customer;
@@ -14,8 +12,8 @@ import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.util.Print;
 
-@Component
-@Order(value = 4)
+//@Component
+//@Order(value = 4)
 public class AdminFacadeTest implements CommandLineRunner {
 	@Autowired
 	private AdminFacadeService admin;
@@ -204,7 +202,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 		Customer customer = admin.getOneCustomer(customertest1.getId());
 		try {
 			customer.setId(2000);
-			admin.updateCustomer(customer, 10);
+			admin.updateCustomer(customer);
 		} catch (NoAccessException e) {
 			System.out.println(e.getMessage());
 		}
@@ -216,7 +214,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 		customer.setEmail("asddasgagsd");
 		customer.setPassword("asdgasdadsg");
 		try {
-			admin.updateCustomer(customer, 10);
+			admin.updateCustomer(customer);
 		} catch (NoAccessException e) {
 			System.out.println(e.getMessage());
 		}
@@ -229,7 +227,7 @@ public class AdminFacadeTest implements CommandLineRunner {
 			customer.setLastName("champaigne");
 			customer.setEmail("drizzy@gmail.com");
 			customer.setPassword("123");
-			admin.updateCustomer(customer, 1);
+			admin.updateCustomer(customer);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

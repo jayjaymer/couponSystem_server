@@ -11,10 +11,16 @@ public class JayApplication {
 
 	public static void main(String[] args) {
 		System.out.println("START");
-	ConfigurableApplicationContext ctx = SpringApplication.run(JayApplication.class, args);
-	System.out.println("Coupon System application is up and running! ");
-	
+
+		ConfigurableApplicationContext ctx = SpringApplication.run(JayApplication.class, args); // <-- Start Application 
+
+		System.out.println("Coupon System application is up and running! ");
+		System.out.println();
+
 	//	ctx.close(); // <-- Closing the Application
+	//	System.out.println();
+	//	System.out.println("Coupon System application Shutdown Complete! ");
+
 	}
 
 }

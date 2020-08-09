@@ -116,7 +116,7 @@ public class AdminFacadeService extends ClientFacadeService {
 	}
 
 	// can`t update customer id
-	public void updateCustomer(Customer customer, int customerID) throws NoAccessException, NotFoundException {
+	public void updateCustomer(Customer customer) throws NoAccessException, NotFoundException {
 		if (customerService.getOneCustomerByCustomerID(customer.getId()) == null) {
 			throw new NoAccessException("ID is not found");
 		}
