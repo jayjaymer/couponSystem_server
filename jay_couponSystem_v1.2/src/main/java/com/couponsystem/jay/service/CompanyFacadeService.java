@@ -53,7 +53,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 	}
 
 	// cant update coupon id or company id
-	public void updateCoupon(Coupon coupon) throws NoAccessException, NotFoundException {
+	public void updateCoupon(Coupon coupon) throws NoAccessException {
 		int companyCoupon = couponService.getOneCouponByID(coupon.getId()).getCompanyID();
 
 		if (companyCoupon != coupon.getCompanyID()) {
@@ -65,7 +65,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 	}
 
 	// to delete coupon most delete all connections to the coupon
-	public void deleteCoupon(int couponID) {
+	public void deleteCoupon(int couponID) throws NotFoundException{
 		List<Coupon> coupons = couponService.getAllCoupons();
 		for (Coupon coupon : coupons) {
 			if (coupon.getId() == couponID) {

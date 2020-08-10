@@ -28,6 +28,7 @@ public class CouponService {
 
 	public void deleteCoupon(int couponID) {
 		repo.deleteById(couponID);
+		
 	}
 
 	public List<Coupon> getAllCoupons() {

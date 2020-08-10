@@ -18,7 +18,7 @@ public class AdminFacadeService extends ClientFacadeService {
 	protected CompanyService companyService = new CompanyService();
 	@Autowired
 	protected CustomerService customerService = new CustomerService();
-
+	
 	@Override
 	public boolean login(String email, String password) {
 		System.out.println(email + " " + password);
@@ -70,14 +70,17 @@ public class AdminFacadeService extends ClientFacadeService {
 
 	// try to delete company all coupons to the company most be deleted.
 	public void deleteCompany(int companyID) throws NotFoundException {
+		if (companyService.findCompanyByID(companyID) == null) {
+			throw new NotFoundException("Company does not exists");
+		}
 		Company comp = companyService.getOneCompanyByID(companyID);
 		if (comp.getCoupons().size() > 0) {
 			for (Coupon coupon : comp.getCoupons()) {
 				couponService.deletePurchasedCouponByCouponID(coupon.getId());
 			}
-
 		}
 		companyService.deleteCompany(comp.getId());
+		
 	}
 
 	public List<Company> getallCompanies() {
@@ -125,6 +128,9 @@ public class AdminFacadeService extends ClientFacadeService {
 
 	// to delete customer most delete coupons connected to the customer.
 	public void deleteCustomer(int customerID) throws NotFoundException {
+		if (customerService.findCustomerByID(customerID) == null) {
+			throw new NotFoundException("ID is not found");
+		}
 		Customer cust = customerService.getOneCustomerByCustomerID(customerID);
 		if (cust.getCoupons().size() > 0) {
 			for (Coupon coupon : cust.getCoupons()) {

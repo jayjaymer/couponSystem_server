@@ -10,27 +10,27 @@ import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CustomerService;
 import com.couponsystem.jay.util.Print;
 
-//@Component
-//@Order(value = 3)
+@Component
+@Order(value = 3)
 public class CustomerCRUDTest implements CommandLineRunner {
 	@Autowired
 	CustomerService customerService;
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		
-		Print print = new Print();
-		
-		System.out.println();
-		print.customerTEST(null);
-		System.out.println();
-
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~CUSTOMER DUMMY TEST~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println();
-		
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		
+//		Print print = new Print();
+//		
+//		System.out.println();
+//		print.customerTEST(null);
+//		System.out.println();
+//
+//		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~CUSTOMER DUMMY TEST~~~~~~~~~~~~~~~~~~~~~~~");
+//		System.out.println();
+//		
 		
 		// ADD CUSTOMERS
 		System.out.println("****Adding Customers****");
@@ -106,47 +106,47 @@ public class CustomerCRUDTest implements CommandLineRunner {
 		customerService.addCustomer(customer9);
 		System.out.println("Customers are added.");
 		System.out.println();
-
-		// UPDATE CUSTOMERS
-		System.out.println("****Update Customer****");
-		System.out.println("Customer9 email address before update : "+ customer9.getEmail());
-		customer9.setEmail("ahfafdshhafsd");
-		customerService.updateCustomer(customer9);
-		System.out.println("Customer9 email address after update : " + customer9.getEmail());
-		System.out.println(customerService.getOneCustomerByCustomerID(9));
-		System.out.println();
-		
-		// DELETE CUSTOMER
-		System.out.println("****Customer DELETE****");
-		customerService.deleteCustomer(9);
-		System.out.println("Customer 9 Deleted");
-		System.out.println();
-
-		// GET ALL CUSTOMERS
-		System.out.println("****Customers Registered****");
-		System.out.println(customerService.getAllCustomer());
-		System.out.println();
-
-		// GET ONE CUSTOMER
-		System.out.println("****Get one registerd Customer By ID****");
-		System.out.println("real info test");
-		System.out.println(customerService.findCustomerByID(1));
-		System.out.println("fake info test");
-		try {
-			System.out.println(customerService.findCustomerByID(55));
-		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println();
-		
-		// CHECK IF CUSTOMER EXISTS
-		System.out.println("****Customer Existence ****");
-		System.out.println("real info test");
-		System.out.println(customerService.checkIfCustomer("jay@gmail.com", "123"));
-		System.out.println("fake info test");
-		System.out.println(customerService.checkIfCustomer("adshadshasdhdsa@gmail.com", "123"));
-		System.out.println();
-		
+//
+//		// UPDATE CUSTOMERS
+//		System.out.println("****Update Customer****");
+//		System.out.println("Customer9 email address before update : "+ customer9.getEmail());
+//		customer9.setEmail("ahfafdshhafsd");
+//		customerService.updateCustomer(customer9);
+//		System.out.println("Customer9 email address after update : " + customer9.getEmail());
+//		System.out.println(customerService.getOneCustomerByCustomerID(9));
+//		System.out.println();
+//		
+//		// DELETE CUSTOMER
+//		System.out.println("****Customer DELETE****");
+//		customerService.deleteCustomer(9);
+//		System.out.println("Customer 9 Deleted");
+//		System.out.println();
+//
+//		// GET ALL CUSTOMERS
+//		System.out.println("****Customers Registered****");
+//		System.out.println(customerService.getAllCustomer());
+//		System.out.println();
+//
+//		// GET ONE CUSTOMER
+//		System.out.println("****Get one registerd Customer By ID****");
+//		System.out.println("real info test");
+//		System.out.println(customerService.findCustomerByID(1));
+//		System.out.println("fake info test");
+//		try {
+//			System.out.println(customerService.findCustomerByID(55));
+//		} catch (NotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+//		System.out.println();
+//		
+//		// CHECK IF CUSTOMER EXISTS
+//		System.out.println("****Customer Existence ****");
+//		System.out.println("real info test");
+//		System.out.println(customerService.checkIfCustomer("jay@gmail.com", "123"));
+//		System.out.println("fake info test");
+//		System.out.println(customerService.checkIfCustomer("adshadshasdhdsa@gmail.com", "123"));
+//		System.out.println();
+//		
 	}
 
 }

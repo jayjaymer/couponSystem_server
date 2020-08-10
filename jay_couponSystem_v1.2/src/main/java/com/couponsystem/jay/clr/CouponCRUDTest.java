@@ -15,8 +15,8 @@ import com.couponsystem.jay.util.DateUtil;
 import com.couponsystem.jay.util.Print;
 
 
-//@Component
-//@Order(value = 2)
+@Component
+@Order(value = 2)
 public class CouponCRUDTest implements CommandLineRunner {
 	
 	@Autowired
@@ -26,17 +26,17 @@ public class CouponCRUDTest implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		Print print = new Print();
-		
-		System.out.println();
-		print.couponTEST(null);
-		System.out.println();
-		
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~COUPON DUMMY TEST~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		Print print = new Print();
+//		
+//		System.out.println();
+//		print.couponTEST(null);
+//		System.out.println();
+//		
+//		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~COUPON DUMMY TEST~~~~~~~~~~~~~~~~~~~~~~~");
+//		System.out.println();
 		// ADD COUPON
 		System.out.println("****Adding Coupons****");
 		Coupon coupon1 = Coupon.builder()
@@ -160,48 +160,48 @@ public class CouponCRUDTest implements CommandLineRunner {
 		couponService.addCoupon(coupon8);
 		couponService.addCoupon(coupon9);
 		System.out.println("Coupons are added.");
-		System.out.println();
+//		System.out.println();
 		
 		// UPDATE COUPON
-		System.out.println("****Updating Coupon****");
-		System.out.println("Coupon9 Title before update : "+coupon9.getTitle());
-		coupon9.setTitle("asdfhsdfhdfshsdfdfshfds");
-		couponService.updateCoupon(coupon9);
-		System.out.println("Coupon9 Title after update : "+coupon9.getTitle());
-		System.out.println(coupon9);
-		System.out.println();
-		
-		// DELETE COUPON
-		System.out.println("****Coupon DELETE****");
-		couponService.deleteCoupon(9);
-		System.out.println("Coupon 9 Deleted");
-		System.out.println();
-		
-		// GET ALL COUPONS
-		System.out.println("****Coupons Registered****");
-		System.out.println(couponService.getAllCoupons());
-		System.out.println();
-		
-		// GET ONE COUPON
-		System.out.println("****Get one registerd Coupon By ID****");
-		System.out.println("real info test");
-		System.out.println(couponService.findCouponByID(1));
-		System.out.println("fake info test");
-		try {
-			System.out.println(couponService.findCouponByID(55));
-		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println();
-		
-		// IS COUPON EXISTS
-		System.out.println("****Coupon Existence ****");
-		System.out.println("real info test");
-		System.out.println(couponService.checkIfCoupon(3));
-		System.out.println("fake info test");
-		System.out.println(couponService.checkIfCoupon(55));
-		System.out.println();
-		
+//		System.out.println("****Updating Coupon****");
+//		System.out.println("Coupon9 Title before update : "+coupon9.getTitle());
+//		coupon9.setTitle("asdfhsdfhdfshsdfdfshfds");
+//		couponService.updateCoupon(coupon9);
+//		System.out.println("Coupon9 Title after update : "+coupon9.getTitle());
+//		System.out.println(coupon9);
+//		System.out.println();
+//		
+//		// DELETE COUPON
+//		System.out.println("****Coupon DELETE****");
+//		couponService.deleteCoupon(9);
+//		System.out.println("Coupon 9 Deleted");
+//		System.out.println();
+//		
+//		// GET ALL COUPONS
+//		System.out.println("****Coupons Registered****");
+//		System.out.println(couponService.getAllCoupons());
+//		System.out.println();
+//		
+//		// GET ONE COUPON
+//		System.out.println("****Get one registerd Coupon By ID****");
+//		System.out.println("real info test");
+//		System.out.println(couponService.findCouponByID(1));
+//		System.out.println("fake info test");
+//		try {
+//			System.out.println(couponService.findCouponByID(55));
+//		} catch (NotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+//		System.out.println();
+//		
+//		// IS COUPON EXISTS
+//		System.out.println("****Coupon Existence ****");
+//		System.out.println("real info test");
+//		System.out.println(couponService.checkIfCoupon(3));
+//		System.out.println("fake info test");
+//		System.out.println(couponService.checkIfCoupon(55));
+//		System.out.println();
+//		
 	}
 
 }

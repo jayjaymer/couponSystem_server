@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.couponsystem.jay.beans.Coupon;
+import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CompanyFacadeService;
 import com.couponsystem.jay.service.CouponService;
 
@@ -39,7 +40,11 @@ public class ExpiredCouponsDailyThread implements Runnable{
 			List<Coupon> coupons = couponService.getAllCoupons();
 			for (Coupon coupon : coupons) {
 				if (coupon.getEndDate().before(new Date(System.currentTimeMillis()))) {
-					companyFacadeService.deleteCoupon(coupon.getId());
+					try {
+						companyFacadeService.deleteCoupon(coupon.getId());
+					} catch (NotFoundException e) {
+						System.out.println(e.getMessage());
+					}
 				}
 			}
 			try {
