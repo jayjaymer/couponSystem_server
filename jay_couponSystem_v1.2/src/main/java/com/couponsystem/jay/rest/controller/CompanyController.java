@@ -29,10 +29,11 @@ import com.couponsystem.jay.service.CompanyFacadeService;
 @RequestMapping("company")
 public class CompanyController extends ClientController {
 
-	private ConfigurableApplicationContext ctx;
 	@Autowired
 	private CompanyFacadeService comp;
 	
+	
+	// TODO
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
 	public boolean login(@RequestParam String email,@RequestParam String password)
@@ -92,29 +93,6 @@ public class CompanyController extends ClientController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Override
-//	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 
 }

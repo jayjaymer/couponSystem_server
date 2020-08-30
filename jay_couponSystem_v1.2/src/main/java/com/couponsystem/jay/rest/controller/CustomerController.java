@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,20 +24,31 @@ import com.couponsystem.jay.exceptions.AlreadyExistsException;
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
+import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.service.CustomerFacadeService;
 
 @RestController
 @RequestMapping("customer")
 public class CustomerController extends ClientController{
 
-	private ConfigurableApplicationContext ctx;
 	@Autowired
 	private CustomerFacadeService cust;
+	@Autowired
+	private LoginManager managerLogin;
+	@Autowired
+	private TokenManger managerToken;
 	
+	// TODO
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
 	public boolean login(@RequestParam String email,@RequestParam String password)
 			throws NotFoundException, NoAccessException, LoginFailledException {
+		HttpHeaders returnHeaders = new HttpHeaders();
+		try {
+			String token = managerLogin.login(email, password, clientType)
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return cust.login(email, password);
 	}
 	
@@ -73,23 +85,7 @@ public class CustomerController extends ClientController{
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Override
-//	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-//		// TODO Auto-generated method stub
-//		
-//	}
+
 	
 
 }

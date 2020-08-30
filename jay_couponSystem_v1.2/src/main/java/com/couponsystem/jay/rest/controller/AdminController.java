@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,9 +37,6 @@ import com.couponsystem.jay.service.AdminFacadeService;
 @RequestMapping("admin")
 //@CrossOrigin
 public class AdminController extends ClientController {
-	// implements ApplicationContextAware
-	// private Map<String, Cl>
-	private ConfigurableApplicationContext ctx;
 	@Autowired
 	private AdminFacadeService admin;
 	
@@ -49,11 +48,12 @@ public class AdminController extends ClientController {
 	}
 	
 	// Company mapping
-	// TODO
-	@RequestMapping(value = "add-company", method = RequestMethod.POST)
+	@RequestMapping(value = "add-company", method = RequestMethod.POST, headers = )
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void AddCompany(@RequestBody Company company) throws AlreadyExistsException {
+		HttpHeaders headers = new HttpHeaders();
 		admin.createCompany(company);
+		
 	}
 
 	@RequestMapping(value = "update-company", method = RequestMethod.PUT)
@@ -124,20 +124,5 @@ public class AdminController extends ClientController {
 		return admin.findCustomerById(customerID);
 	}
 	
-	
-	
-	
-	
-	
-	
-
-//	@Override
-//	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
-//		if (ctx instanceof ConfigurableApplicationContext) {
-//			this.ctx = (ConfigurableApplicationContext) ctx;
-//		}
-//	}
-
-
 
 }

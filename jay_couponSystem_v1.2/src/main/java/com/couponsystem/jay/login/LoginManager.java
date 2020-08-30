@@ -1,3 +1,4 @@
+
 package com.couponsystem.jay.login;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,8 @@ public class LoginManager {
 			return null;
 		}
 	}
+	
+	
+	
 
 }
