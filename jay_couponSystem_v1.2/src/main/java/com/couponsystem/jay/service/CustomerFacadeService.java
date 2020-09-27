@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Category;
@@ -14,7 +15,11 @@ import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
+import lombok.Setter;
+
 @Service
+@Scope("prototype")
+@Setter
 public class CustomerFacadeService extends ClientFacadeService {
 
 	Customer customer;

@@ -1,5 +1,5 @@
-package com.couponsystem.jay.rest.controller;
 
+package com.couponsystem.jay.rest.controller;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,98 +32,178 @@ import com.couponsystem.jay.exceptions.AlreadyExistsException;
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
+import com.couponsystem.jay.exceptions.TokenNotExistsException;
+import com.couponsystem.jay.login.ClientType;
+import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.service.AdminFacadeService;
 
 @RestController
 @RequestMapping("admin")
-//@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class AdminController extends ClientController {
 	@Autowired
 	private AdminFacadeService admin;
 	
-	@RequestMapping(value = "/login",method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-	public boolean login(@RequestParam String email,@RequestParam String password)
+
+	@PostMapping("login")
+	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password)
 			throws NotFoundException, NoAccessException, LoginFailledException {
-		return admin.login(email, password);
+		HttpHeaders returnHeaders = new HttpHeaders();
+		try {
+			String token = managerLogin.loginC(email, password, ClientType.ADMINISTRATOR);
+			returnHeaders.add("Token", token);
+			returnHeaders.add("Access-Control-Expose-Headers", "Token");
+			return ResponseEntity.ok().headers(returnHeaders).body("Logged in Successfully!");
+		} catch (LoginFailledException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+
 	}
-	
+
 	// Company mapping
-	@RequestMapping(value = "add-company", method = RequestMethod.POST, headers = )
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public void AddCompany(@RequestBody Company company) throws AlreadyExistsException {
-		HttpHeaders headers = new HttpHeaders();
-		admin.createCompany(company);
-		
-	}
-
-	@RequestMapping(value = "update-company", method = RequestMethod.PUT)
-	@ResponseStatus(value = HttpStatus.OK)
-	public void updateCompany(@RequestBody Company company) throws NoAccessException, NotFoundException {
-		admin.updateCompany(company);
-	}
-
-	@RequestMapping(value = "delete-company/{companyID}", method = RequestMethod.DELETE)
-	@ResponseStatus(value = HttpStatus.GONE)
-	public void deleteCompany(@PathVariable int companyID) throws NotFoundException {
-		admin.deleteCompany(companyID);
-	}
-
-	@RequestMapping(value = "get-all-companies", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	public List<Company> getAllCompanies() {
-		return admin.getallCompanies();
-	}
-
-	@RequestMapping(value = "get-one-company/{companyID}", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	public Company getOneCompany(@PathVariable int companyID) throws NotFoundException {
-		return admin.getOneCompany(companyID);
-	}
-
-	@RequestMapping(value = "find-one-company/{companyID}", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	public Company findOneCompany(@PathVariable int companyID) throws NotFoundException {
-		return admin.findCompanyByID(companyID);
+	@PostMapping("addCompany")
+	public ResponseEntity<?> AddCompany(@RequestBody Company company,
+			@RequestHeader(name = "Token", required = false) String token) throws AlreadyExistsException {
+		try {
+			managerToken.isTokenExists(token);
+			((AdminFacadeService) managerToken.getType(token)).createCompany(company);
+			return new ResponseEntity<>("Company added", HttpStatus.CREATED);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (AlreadyExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 
 	}
 
-	// customer mapping
-	@RequestMapping(value = "add-customer", method = RequestMethod.POST)
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public void addCustomer(@RequestBody Customer customer) throws AlreadyExistsException {
-		admin.addCustomer(customer);
+	@PutMapping("updateCompany")
+	public ResponseEntity<?> updateCompany(@RequestBody Company company,
+			@RequestHeader(name = "Token", required = false) String token) throws NoAccessException, NotFoundException {
+		try {
+			managerToken.isTokenExists(token);
+			((AdminFacadeService) managerToken.getType(token)).updateCompany(company);
+			return new ResponseEntity<>("Company was updated!", HttpStatus.CREATED);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+
+		} catch (NoAccessException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	@RequestMapping(value = "update-customer", method = RequestMethod.PUT)
-	@ResponseStatus(value = HttpStatus.OK)
-	public void updateCustomer(@RequestBody Customer customer) throws NoAccessException, NotFoundException {
-		admin.updateCustomer(customer);
+	@DeleteMapping("deleteCompany/{id}")
+	public ResponseEntity<?> deleteCompany(@PathVariable int companyID,
+			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
+		try {
+			managerToken.isTokenExists(token);
+			((AdminFacadeService) managerToken.getType(token)).deleteCompany(companyID);
+			return new ResponseEntity<>("Company was Deleted", HttpStatus.ACCEPTED);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	@RequestMapping(value = "delete-customer/{customerID}", method = RequestMethod.DELETE)
-	@ResponseStatus(value = HttpStatus.GONE)
-	public void deleteCustomer(@PathVariable int customerID) throws NotFoundException {
-		admin.deleteCustomer(customerID);
+	@GetMapping("getAllCompanies")
+	public ResponseEntity<?> getAllCompanies(@RequestHeader(name = "Token", required = false) String token) {
+		try {
+			managerToken.isTokenExists(token);
+			return new ResponseEntity<List<Company>>(
+					((AdminFacadeService) managerToken.getType(token)).getallCompanies(), HttpStatus.OK);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
 	}
 
-	@RequestMapping(value = "get-all-customers", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	public List<Customer> getallCustomer() {
-		return admin.getAllCustomers();
+	@GetMapping("getOneCompany/{id}")
+	public ResponseEntity<?> getOneCompany(@PathVariable int companyID,
+			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
+		try {
+			managerToken.isTokenExists(token);
+			return new ResponseEntity<Company>(
+					((AdminFacadeService) managerToken.getType(token)).getOneCompany(companyID), HttpStatus.OK);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	@RequestMapping(value = "get-one-customer/{customerID}", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	public Customer getOneCustomer(@PathVariable int customerID) throws NotFoundException {
-		return admin.getOneCustomer(customerID);
+	// Customer mapping
+
+	@PostMapping("addCustomer")
+	public ResponseEntity<?> addCustomer(@RequestBody Customer customer,
+			@RequestHeader(name = "Token", required = false) String token) throws AlreadyExistsException {
+		try {
+			managerToken.isTokenExists(token);
+			((AdminFacadeService) managerToken.getType(token)).addCustomer(customer);
+			return new ResponseEntity<>("Customer was added!", HttpStatus.CREATED);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (AlreadyExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+
 	}
 
-	@RequestMapping(value = "find-one-customer/{customerID}", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	public Customer findOneCustomer(@PathVariable int customerID) throws NotFoundException {
-		return admin.findCustomerById(customerID);
+	@PutMapping("updateCustomer")
+	public ResponseEntity<?> updateCustomer(@RequestBody Customer customer,
+			@RequestHeader(name = "Token", required = false) String token) throws NoAccessException, NotFoundException {
+		try {
+			managerToken.isTokenExists(token);
+			((AdminFacadeService) managerToken.getType(token)).updateCustomer(customer);
+			return new ResponseEntity<>("Customer was updated!", HttpStatus.CREATED);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (NoAccessException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
-	
+
+	@DeleteMapping("deleteCustomer/{id}")
+	public ResponseEntity<?> deleteCustomer(@PathVariable int customerID,
+			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
+		try {
+			managerToken.isTokenExists(token);
+			((AdminFacadeService) managerToken.getType(token)).deleteCustomer(customerID);
+			return new ResponseEntity<>("Customer was Deleted!", HttpStatus.ACCEPTED);
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("getAllCustomers")
+	public ResponseEntity<?> getallCustomer(@RequestHeader(name = "Token", required = false) String token) {
+		try {
+			managerToken.isTokenExists(token);
+			return new ResponseEntity<List<Customer>>(
+					((AdminFacadeService) managerToken.getType(token)).getAllCustomers(), HttpStatus.OK);
+
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		}
+	}
+
+	@GetMapping("getOneCustomer/{id}")
+	public ResponseEntity<?> getOneCustomer(@PathVariable int customerID,
+			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
+		try {
+			managerToken.isTokenExists(token);
+			return new ResponseEntity<Customer>(
+					((AdminFacadeService) managerToken.getType(token)).getOneCustomer(customerID), HttpStatus.OK);
+
+		} catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }

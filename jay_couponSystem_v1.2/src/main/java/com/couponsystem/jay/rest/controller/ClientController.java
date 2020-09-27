@@ -1,30 +1,28 @@
 package com.couponsystem.jay.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
+import com.couponsystem.jay.login.LoginManager;
+import com.couponsystem.jay.login.TokenManager;
 
 @RestController
 @RequestMapping("/api")
 public abstract class ClientController {
 	
 	@Autowired
-	protected AdminController admin;
+	LoginManager managerLogin;
 	@Autowired
-	protected CustomerController customer;
-	@Autowired
-	protected CompanyController company;
+	TokenManager managerToken;
 	
-	public ClientController() {
-		super();
-	}
 	
-	public abstract boolean login (String email, String password) throws NotFoundException, NoAccessException , LoginFailledException;
-	
+	public abstract ResponseEntity<?> login (@RequestParam String email, @RequestParam String password) throws NotFoundException, NoAccessException , LoginFailledException;
 	
 
 	

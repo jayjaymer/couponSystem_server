@@ -9,8 +9,10 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +26,10 @@ import com.couponsystem.jay.exceptions.AlreadyExistsException;
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
+import com.couponsystem.jay.exceptions.TokenNotExistsException;
+import com.couponsystem.jay.login.ClientType;
 import com.couponsystem.jay.login.LoginManager;
+import com.couponsystem.jay.login.TokenManager;
 import com.couponsystem.jay.service.CustomerFacadeService;
 
 @RestController
@@ -35,21 +40,24 @@ public class CustomerController extends ClientController{
 	private CustomerFacadeService cust;
 	@Autowired
 	private LoginManager managerLogin;
-	@Autowired
-	private TokenManger managerToken;
 	
+	 
 	// TODO
-	@RequestMapping(value = "/login",method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-	public boolean login(@RequestParam String email,@RequestParam String password)
+	@RequestMapping(value = "/login",method = RequestMethod.POST)
+//	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+	@Override
+	public ResponseEntity<?> login(@RequestParam String email,@RequestParam String password)
 			throws NotFoundException, NoAccessException, LoginFailledException {
+		
 		HttpHeaders returnHeaders = new HttpHeaders();
+		
 		try {
-			String token = managerLogin.login(email, password, clientType)
-		} catch (Exception e) {
-			// TODO: handle exception
+			 String token = managerLogin.loginC(email, password, ClientType.CUSTOMER);
+			returnHeaders.set("CS-Header", token);
+		} catch (LoginFailledException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
 		}
-		return cust.login(email, password);
+		return ResponseEntity.ok().headers(returnHeaders).body("You are Logged in!");
 	}
 	
 	@RequestMapping(value = "purchase-coupon",method = RequestMethod.POST)
@@ -58,11 +66,17 @@ public class CustomerController extends ClientController{
 		cust.purchaseCoupon(coupon);
 	}
 	
-	@RequestMapping(value = "get-customer-coupons")
-	@ResponseStatus(value = HttpStatus.OK)
-	public List<Coupon> getCustomerCoupons() throws NotFoundException{
-		return cust.getCustomerCoupons();
-	}
+//	@RequestMapping(value = "get-customer-coupons")
+//	public ResponseEntity<?> getCustomerCoupons(@RequestHeader (name = "CS-Header",)) throws NotFoundException{
+//		try {
+//			managerToken.isTokenExists(token);
+//			return ResponseEntity.ok(((CustomerFacadeService) managerToken.getClientFacadeService);
+//		} catch (TokenNotExistsException e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//		
+//		
+//	}
 	
 	@RequestMapping(value = "get-customer-coupons-by-category/{category}",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)

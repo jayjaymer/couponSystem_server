@@ -4,6 +4,7 @@ package com.couponsystem.jay.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
@@ -13,7 +14,7 @@ import com.couponsystem.jay.service.ClientFacadeService;
 import com.couponsystem.jay.service.CompanyFacadeService;
 import com.couponsystem.jay.service.CustomerFacadeService;
 
-@Component
+@Service
 @Lazy
 public class LoginManager {
 
@@ -23,6 +24,8 @@ public class LoginManager {
 	private CustomerFacadeService customerFacadeService;
 	@Autowired
 	private CompanyFacadeService companyFacadeService;
+	@Autowired
+	TokenManager tokenManager;
 
 	private LoginManager() {
 		super();
@@ -52,6 +55,33 @@ public class LoginManager {
 			}
 		default:
 			return null;
+		}
+	}
+	
+	public String loginC(String email, String password, ClientType clientType) throws NotFoundException, NoAccessException , LoginFailledException {
+
+		switch (clientType) {
+		case ADMINISTRATOR:
+			if (adminFacadeService.login(email, password )) {
+				return tokenManager.addToken(adminFacadeService);
+			}
+		case COMPANY:
+//			CompanyFacadeService companyFacadeService = ctx.getBean(CompanyFacadeService.class);
+			if (companyFacadeService.login(email, password)) {
+//				int compnayID = companyFacadeService.getcompanyID(email,password);
+//				companyFacadeService.setCompanyID(companyID);
+				return tokenManager.addToken(companyFacadeService);
+			} 
+
+		case CUSTOMER:
+//			CustomerFacadeService customerFacadeService = ctx.getBean(CustomerFacadeService.class);
+			if (customerFacadeService.login(email, password)) {
+//				int customerID = customerFacadeService.getCustomerId(email,password);
+//				customerFacadeService.setCustomerID(customerID);
+				return tokenManager.addToken(customerFacadeService);
+			}
+		default:
+			throw new LoginFailledException("invalid username or password");
 		}
 	}
 	

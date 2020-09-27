@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +37,11 @@ public class CompanyController extends ClientController {
 	// TODO
 	@RequestMapping(value = "/login",method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-	public boolean login(@RequestParam String email,@RequestParam String password)
+	public ResponseEntity<?> login(@RequestParam String email,@RequestParam String password)
 			throws NotFoundException, NoAccessException, LoginFailledException {
-		return comp.login(email, password);
+				return null;
+//		return comp.login(email, password);
+		
 	}
 	
 	@RequestMapping(value = "create-coupon",method = RequestMethod.POST)

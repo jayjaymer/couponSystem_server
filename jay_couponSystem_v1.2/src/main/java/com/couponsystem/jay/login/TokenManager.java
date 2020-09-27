@@ -5,20 +5,32 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.couponsystem.jay.exceptions.TokenNotExistsException;
+import com.couponsystem.jay.service.ClientFacadeService;
 
 @Component
 public class TokenManager {
-	private Map<String, CustomSession> tokens = new HashMap<>();
+	@Autowired
+	private Map<String, CustomSession> tokens;
 
+	public String addToken(ClientFacadeService clientFacadeService) {
+		String token = UUID.randomUUID().toString();
+		tokens.put(token, new CustomSession(clientFacadeService, System.currentTimeMillis()));
+		return token;
+	}
 
-
-public String add(String facade) {
-	String token = UUID.randomUUID().toString();
-	CustomSession customSession = new CustomSession(facade, new Date());
-	tokens.put(token, customSession);
-	return token;
+	public boolean isTokenExists(String token) throws TokenNotExistsException {
+		CustomSession customSession = tokens.get(token);
+		if (customSession != null) {
+			return true;
+		}
+		throw new TokenNotExistsException("Token isnt found, please try again!");
+	}
+	
+	public ClientFacadeService getType(String token) {
+		return tokens.get(token).getClientFacadeService();
+	}
 }
-
-}
-

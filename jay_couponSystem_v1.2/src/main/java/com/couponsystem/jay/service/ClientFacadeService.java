@@ -14,11 +14,11 @@ import lombok.Getter;
 public abstract class ClientFacadeService {
 	
 	@Autowired
-	protected CouponService couponService = null;
+	protected CouponService couponService;
 	@Autowired
-	protected CompanyService companyService = null;
+	protected CompanyService companyService;
 	@Autowired
-	protected CustomerService customerService = null;
+	protected CustomerService customerService;
 	
 	
 	public abstract boolean login (String email, String password) throws LoginFailledException, NotFoundException;

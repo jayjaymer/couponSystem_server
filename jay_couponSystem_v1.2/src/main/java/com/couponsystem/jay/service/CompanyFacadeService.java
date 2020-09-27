@@ -14,8 +14,11 @@ import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
+import lombok.Setter;
+
 @Service
 @Scope("prototype")
+@Setter
 public class CompanyFacadeService extends ClientFacadeService {
 
 	private int companyID;
