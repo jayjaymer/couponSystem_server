@@ -11,6 +11,7 @@ import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.login.TokenManager;
 @Component
 @Order(value = 4)
+
 public class TokenTest implements CommandLineRunner {
 
 	private RestTemplate restTemplate = new RestTemplate();

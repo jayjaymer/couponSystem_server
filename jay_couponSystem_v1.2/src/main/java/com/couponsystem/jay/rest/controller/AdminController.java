@@ -41,8 +41,6 @@ import com.couponsystem.jay.service.AdminFacadeService;
 @RequestMapping("admin")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class AdminController extends ClientController {
-	@Autowired
-	private AdminFacadeService admin;
 	
 
 	@PostMapping("login")
@@ -53,7 +51,7 @@ public class AdminController extends ClientController {
 			String token = managerLogin.loginC(email, password, ClientType.ADMINISTRATOR);
 			returnHeaders.add("Token", token);
 			returnHeaders.add("Access-Control-Expose-Headers", "Token");
-			return ResponseEntity.ok().headers(returnHeaders).body("Logged in Successfully!");
+			return ResponseEntity.ok().headers(returnHeaders).body("Logged in as admin successfully!");
 		} catch (LoginFailledException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -93,7 +91,7 @@ public class AdminController extends ClientController {
 		}
 	}
 
-	@DeleteMapping("deleteCompany/{id}")
+	@DeleteMapping("deleteCompany/{companyID}")
 	public ResponseEntity<?> deleteCompany(@PathVariable int companyID,
 			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
 		try {
@@ -118,7 +116,7 @@ public class AdminController extends ClientController {
 		}
 	}
 
-	@GetMapping("getOneCompany/{id}")
+	@GetMapping("getOneCompany/{companyID}")
 	public ResponseEntity<?> getOneCompany(@PathVariable int companyID,
 			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
 		try {
@@ -165,7 +163,7 @@ public class AdminController extends ClientController {
 		}
 	}
 
-	@DeleteMapping("deleteCustomer/{id}")
+	@DeleteMapping("deleteCustomer/{customerID}")
 	public ResponseEntity<?> deleteCustomer(@PathVariable int customerID,
 			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
 		try {
@@ -191,7 +189,7 @@ public class AdminController extends ClientController {
 		}
 	}
 
-	@GetMapping("getOneCustomer/{id}")
+	@GetMapping("getOneCustomer/{customerID}")
 	public ResponseEntity<?> getOneCustomer(@PathVariable int customerID,
 			@RequestHeader(name = "Token", required = false) String token) throws NotFoundException {
 		try {
