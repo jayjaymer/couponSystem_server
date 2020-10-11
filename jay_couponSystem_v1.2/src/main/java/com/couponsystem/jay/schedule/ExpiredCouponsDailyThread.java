@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.exceptions.NotFoundException;
+import com.couponsystem.jay.login.TokenManager;
 import com.couponsystem.jay.service.CompanyFacadeService;
 import com.couponsystem.jay.service.CouponService;
 
@@ -56,8 +57,5 @@ public class ExpiredCouponsDailyThread implements Runnable{
 		}
 	}
 	
-	public void stopJob() {
-		quit = true;
-	}
 
 }

@@ -14,10 +14,7 @@ import com.couponsystem.jay.exceptions.NotFoundException;
 
 @Service
 public class AdminFacadeService extends ClientFacadeService {
-	@Autowired
-	protected CompanyService companyService = new CompanyService();
-	@Autowired
-	protected CustomerService customerService = new CustomerService();
+	
 	
 	@Override
 	public boolean login(String email, String password) {

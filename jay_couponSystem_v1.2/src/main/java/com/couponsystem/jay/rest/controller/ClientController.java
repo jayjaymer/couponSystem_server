@@ -13,7 +13,7 @@ import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.login.TokenManager;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public abstract class ClientController {
 	
 	@Autowired
@@ -22,7 +22,10 @@ public abstract class ClientController {
 	TokenManager managerToken;
 	
 	
+	
+	
 	public abstract ResponseEntity<?> login (@RequestParam String email, @RequestParam String password) throws NotFoundException, NoAccessException , LoginFailledException;
+	
 	
 
 	

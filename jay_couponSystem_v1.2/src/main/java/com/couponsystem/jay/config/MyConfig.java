@@ -1,6 +1,7 @@
 package com.couponsystem.jay.config;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +46,7 @@ public class MyConfig {
 	    }
 	
 	@Bean
-	public HashMap<String, CustomSession> tokens(){
+	public Map<String, CustomSession> tokens(){
 		return new HashMap<>();
 	}
 	

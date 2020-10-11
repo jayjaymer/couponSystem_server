@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component;
 import com.couponsystem.jay.exceptions.TokenNotExistsException;
 import com.couponsystem.jay.service.ClientFacadeService;
 
+import lombok.Getter;
+
 @Component
+@Getter
 public class TokenManager {
 	@Autowired
 	private Map<String, CustomSession> tokens;
@@ -33,4 +36,15 @@ public class TokenManager {
 	public ClientFacadeService getType(String token) {
 		return tokens.get(token).getClientFacadeService();
 	}
+	
+	public void deleteToken(String token) {
+		tokens.remove(token);
+	}
+	
+	public void removeExpiredToken(String token) {
+		
+		
+		
+	}
+	
 }

@@ -18,9 +18,9 @@ public class TokenTest implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		String tokenTeString = restTemplate.postForObject("http://localhost:2000/admin/login?email=admin@admin.com&password=admin" , null, String.class);
-		System.out.println(tokenTeString);
-		System.out.println(restTemplate.postForEntity("http://localhost:2000/admin/login?email=admin@admin.com&password=admin",null, String.class));
+//		String tokenTeString = restTemplate.postForObject("http://localhost:2000/admin/login?email=admin@admin.com&password=admin" , null, String.class);
+//		System.out.println(tokenTeString);
+//		System.out.println(restTemplate.postForEntity("http://localhost:2000/admin/login?email=admin@admin.com&password=admin",null, String.class));
 		
 //		List<Coupon> coupons = restTemplate.getForObject("http://localhostL8080/admin/get-all-coupons/"+tokenTeString, POGO.class);
 		

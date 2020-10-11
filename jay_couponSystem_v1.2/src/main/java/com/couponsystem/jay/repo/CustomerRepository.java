@@ -24,5 +24,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	@Modifying
 	@Query(value = "SELECT * FROM customers_coupons", nativeQuery = true)
 	List<Coupon> getCustomersVsCoupons();
-
+	
 }

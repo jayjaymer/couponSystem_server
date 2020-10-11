@@ -21,6 +21,8 @@ public abstract class ClientFacadeService {
 	protected CustomerService customerService;
 	
 	
+	
+	
 	public abstract boolean login (String email, String password) throws LoginFailledException, NotFoundException;
 	
 	

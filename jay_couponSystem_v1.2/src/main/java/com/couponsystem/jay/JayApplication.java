@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import com.couponsystem.jay.beans.Access;
+
 @SpringBootApplication
 //@EnableScheduling // <-- Enables the Daily Job
 public class JayApplication {
