@@ -149,5 +149,15 @@ public class AdminFacadeService extends ClientFacadeService {
 	public Customer findCustomerById(int customerID) throws NotFoundException {
 		return customerService.findCustomerByID(customerID);
 	}
+	
+	// Coupons
+	
+	public List<Coupon> getAllCoupons(){
+		return couponService.getAllCoupons();
+	}
+	
+	public List<Coupon> getAllCouponsByCompanyID(int companyID) throws NotFoundException {
+		return couponService.getCouponsByCompanyID(companyID);
+	}
 
 }

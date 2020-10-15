@@ -10,6 +10,7 @@ import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.login.LoginManager;
+import com.couponsystem.jay.login.LoginResponse;
 import com.couponsystem.jay.login.TokenManager;
 
 @RestController
@@ -23,11 +24,10 @@ public abstract class ClientController {
 	
 	
 	
-	
 	public abstract ResponseEntity<?> login (@RequestParam String email, @RequestParam String password) throws NotFoundException, NoAccessException , LoginFailledException;
 	
 	
-
+	
 	
 	
 	

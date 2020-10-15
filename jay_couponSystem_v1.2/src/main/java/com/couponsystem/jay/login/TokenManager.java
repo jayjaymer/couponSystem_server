@@ -3,6 +3,7 @@ package com.couponsystem.jay.login;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class TokenManager {
 	}
 	
 	public ClientFacadeService getType(String token) {
-		return tokens.get(token).getClientFacadeService();
+		return tokens.getOrDefault(token, null).getClientFacadeService();
 	}
 	
 	public void deleteToken(String token) {
@@ -42,9 +43,15 @@ public class TokenManager {
 	}
 	
 	public void removeExpiredToken(String token) {
-		
-		
-		
+		 	for(Map.Entry<String, CustomSession> enter : tokens.entrySet()) {
+		 		CustomSession customSession = enter.getValue();
+		 		token = enter.getKey();
+					
+				}
+	}
+	
+	public void getCurrentToken(String token) {
+		tokens.get(token);
 	}
 	
 }

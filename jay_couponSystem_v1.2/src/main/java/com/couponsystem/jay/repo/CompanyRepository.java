@@ -9,7 +9,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	
 	//40%
 	Company findByEmailAndPassword(String email, String password);
-	Company findById(int companyID);
+	Company findById(int id);
 	
 	
 }

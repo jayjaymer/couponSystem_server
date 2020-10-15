@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.couponsystem.jay.beans.Company;
+import com.couponsystem.jay.beans.Customer;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.repo.CompanyRepository;
 
@@ -57,18 +58,20 @@ public class CompanyService {
 		}
 	}
 
-	public Company findCompanyByID(int companyID) throws NotFoundException {
-		if (repo.findById(companyID) != null) {
-			return repo.findById(companyID);
+	public Company findCompanyByID(int id) throws NotFoundException {
+		if (repo.findById(id) != null) {
+			return repo.findById(id);
 		} else {
 			throw new NotFoundException("Company id not found");
 		}
 	}
 
-	public Company findCompanyByEmailAndPassword(String email, String password) {
+	public Company getCompanyByEmailAndPassword(String email, String password) {
 		if (repo.findByEmailAndPassword(email, password) == null) {
 		}
 		return repo.findByEmailAndPassword(email, password);
 	}
+	
+
 
 }

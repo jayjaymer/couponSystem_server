@@ -39,28 +39,28 @@ public class CustomerCRUDTest implements CommandLineRunner {
 				.firstName("Jay")
 				.lastName("Mer")
 				.email("jay@gmail.com")
-				.password("123")
+				.password("12345")
 				.build();
 		
 		Customer customer2 = Customer.builder()
 				.firstName("Shiran")
 				.lastName("cohen")
 				.email("shiran@gmail.com")
-				.password("123")
+				.password("12345")
 				.build();
 		
 		Customer customer3 = Customer.builder()
 				.firstName("Ora")
 				.lastName("shemesh")
 				.email("ora@gmail.com")
-				.password("1234")
+				.password("123445")
 				.build();
 		
 		Customer customer4 = Customer.builder()
 				.firstName("Kobe")
 				.lastName("Bryant")
 				.email("bryant@gmail.com")
-				.password("123")
+				.password("12345")
 				.build();
 		
 		Customer customer5 = Customer.builder()

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.couponsystem.jay.beans.Company;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.service.CompanyService;
+import com.couponsystem.jay.service.CouponService;
 import com.couponsystem.jay.util.Print;
 
 @Component
@@ -15,6 +16,8 @@ import com.couponsystem.jay.util.Print;
 public class CompanyCRUDTest implements CommandLineRunner {
 	@Autowired
 	CompanyService companyService;
+	@Autowired
+	CouponService couponService;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -36,32 +39,32 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		Company c1 = Company.builder()
 				.name("Cola")
 				.email("cola@gmail.com")
-				.password("1234")
+				.password("12345")
 				.build();
 				
 		
 		Company c2 = Company.builder()
 				.name("Tesla")
 				.email("tesla@gmail.com")
-				.password("1234")
+				.password("12345")
 				.build();
 		
 		Company c3 = Company.builder()
 				.name("Soda")
 				.email("soda@gmail.com")
-				.password("1234")
+				.password("12345")
 				.build();
 		
 		Company c4 = Company.builder()
 				.name("Razer")
 				.email("razer@gmail.com")
-				.password("123")
+				.password("12345")
 				.build();
 		
 		Company c5 = Company.builder()
 				.name("Toyota")
 				.email("toyota@gmail.com")
-				.password("123")
+				.password("12345")
 				.build();
 		
 		Company c6 = Company.builder()
@@ -99,6 +102,17 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		companyService.addCompany(c8);
 		companyService.addCompany(c9);
 		System.out.println("*Companies are added.*");
+		
+		
+		couponService.addPurchaseCoupon(1, 1);
+		couponService.addPurchaseCoupon(2, 4);
+		couponService.addPurchaseCoupon(3, 3);
+		couponService.addPurchaseCoupon(4, 2);
+		couponService.addPurchaseCoupon(1, 4);
+		couponService.addPurchaseCoupon(1, 5);
+		couponService.addPurchaseCoupon(1, 3);
+		
+
 //		System.out.println();
 //		
 //		// UPDATE COMPANY
@@ -144,7 +158,7 @@ public class CompanyCRUDTest implements CommandLineRunner {
 //		System.out.println();
 //		
 //	
-
+	
 		
 		
 	}

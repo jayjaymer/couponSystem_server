@@ -81,6 +81,10 @@ public class LoginManager {
 		}
 	}
 	
+	public void logOut(String token) throws NotFoundException{
+		tokenManager.deleteToken(token);
+	}
+	
 	
 
 	

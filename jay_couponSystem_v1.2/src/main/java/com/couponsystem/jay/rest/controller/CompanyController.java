@@ -32,6 +32,7 @@ import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 import com.couponsystem.jay.exceptions.TokenNotExistsException;
 import com.couponsystem.jay.login.ClientType;
+import com.couponsystem.jay.login.LoginResponse;
 import com.couponsystem.jay.service.AdminFacadeService;
 import com.couponsystem.jay.service.CompanyFacadeService;
 
@@ -42,12 +43,12 @@ public class CompanyController extends ClientController {
 	@PostMapping("login")
 	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password)
 			throws NotFoundException, NoAccessException, LoginFailledException {
-		HttpHeaders returnHeaders = new HttpHeaders();
 		try {
 			String token = managerLogin.loginC(email, password, ClientType.COMPANY);
-			returnHeaders.add("Token", token);
-			returnHeaders.add("Access-Control-Expose-Headers", "Token");
-			return ResponseEntity.ok().headers(returnHeaders).body("Logged in as company successfully!");
+			LoginResponse responseLogin = new LoginResponse();
+			responseLogin.setToken(token);
+			System.out.println(token);
+			return new ResponseEntity<LoginResponse>(responseLogin,HttpStatus.CREATED);
 		} catch (LoginFailledException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -70,7 +71,7 @@ public class CompanyController extends ClientController {
 
 	@PutMapping("updateCoupon")
 	public ResponseEntity<?> updateCoupon(@RequestBody Coupon coupon,
-			@RequestHeader(name = "Token", required = false) String token) throws NoAccessException {
+			@RequestHeader(name = "Token", required = false) String token) throws NoAccessException, NotFoundException {
 		try {
 			managerToken.isTokenExists(token);
 			((CompanyFacadeService) managerToken.getType(token)).updateCoupon(coupon);
@@ -157,5 +158,32 @@ public class CompanyController extends ClientController {
 		}
 
 	}
+	
+	
+	
+	@GetMapping("getOneCoupon/{couponID}")
+	public ResponseEntity<?> getOneCoupon(@PathVariable int couponID,@RequestHeader(name = "Token", required = false) String token){
+		try {
+			managerToken.isTokenExists(token);
+			
+			return new ResponseEntity<Coupon>(((CompanyFacadeService)managerToken.getType(token)).getOneCoupon(couponID), HttpStatus.OK);
+		}  catch (TokenNotExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+//	@PutMapping("updateCompany")
+//	public ResponseEntity<?> updateCompany(@RequestBody Company company,@RequestHeader(name = "Token", required = false) String token) throws TokenNotExistsException{
+//		try {
+//			managerToken.isTokenExists(token);
+//			((CompanyFacadeService) managerToken.getType(token)).updateCompany(company);
+//			return new ResponseEntity<>("Coupon was updated!", HttpStatus.CREATED);
+//		} catch (TokenNotExistsException | NotFoundException e) {
+//			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+//			}
+//		
+//	}
 
 }

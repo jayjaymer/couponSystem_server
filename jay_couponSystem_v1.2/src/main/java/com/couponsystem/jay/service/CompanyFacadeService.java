@@ -14,6 +14,7 @@ import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;
 
+import lombok.Getter;
 import lombok.Setter;
 
 @Service
@@ -26,9 +27,10 @@ public class CompanyFacadeService extends ClientFacadeService {
 	@Override
 	public boolean login(String email, String password) throws LoginFailledException, NotFoundException {
 		System.out.println(email + " " + password);
-		if (companyService.findCompanyByEmailAndPassword(email, password) == null) {
+		if (companyService.getCompanyByEmailAndPassword(email, password) == null) {
 			throw new LoginFailledException();
 		}
+		this.companyID = companyService.getCompanyByEmailAndPassword(email, password).getId();
 		System.out.println("Company logged in");
 		return true;
 	}
@@ -44,7 +46,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 	public void createCoupon(Coupon coupon) throws AlreadyExistsException {
 		// cant add exsiting name of a coupon from the SAME company.
 		// can add coupon with the same name from OTHER company
-
+		System.out.println("THIS IS TYEST");
 		List<Coupon> coupons = couponService.getAllCoupons();
 
 		for (Coupon cpn : coupons) {
@@ -56,7 +58,7 @@ public class CompanyFacadeService extends ClientFacadeService {
 	}
 
 	// cant update coupon id or company id
-	public void updateCoupon(Coupon coupon) throws NoAccessException {
+	public void updateCoupon(Coupon coupon) throws NoAccessException, NotFoundException {
 		int companyCoupon = couponService.getOneCouponByID(coupon.getId()).getCompanyID();
 
 		if (companyCoupon != coupon.getCompanyID()) {
@@ -82,8 +84,8 @@ public class CompanyFacadeService extends ClientFacadeService {
 
 	// get all the coupons of the connected company
 	public List<Coupon> getCompanyCoupons() throws NotFoundException {
-
-		return companyService.findCompanyByID(companyID).getCoupons();
+		System.out.println(companyID);
+		return couponService.getCouponsByCompanyID(companyID);
 	}
 
 	// get all the coupons of the connected company by category
@@ -123,12 +125,30 @@ public class CompanyFacadeService extends ClientFacadeService {
 
 	// get all company info including coupons
 	public Company getCompanyDetails() throws NotFoundException {
-		Company companies = companyService.findCompanyByID(companyID);
+		Company companies = companyService.getOneCompanyByID(companyID);
+		List<Coupon> coupons = couponService.getCouponsByCompanyID(companyID);
+		companies.setCoupons(coupons);
 		return companies;
+	}
+	
+	public Coupon getOneCoupon(int couponID) throws NotFoundException {
+		return couponService.getOneCouponByID(couponID);
+	}
+	
+	public void updateCompany(Company company) throws NotFoundException {
+		
+		companyService.updateCompany(company);
 	}
 
 	public void setCompanyID(int companyID) {
 		this.companyID = companyID;
 	}
+
+
+
+	
+	
+
+
 
 }

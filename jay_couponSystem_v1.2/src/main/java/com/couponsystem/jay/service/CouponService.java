@@ -35,8 +35,12 @@ public class CouponService {
 		return repo.findAll();
 	}
 
-	public Coupon getOneCouponByID(int couponID) {
-		return repo.getOne(couponID);
+	public Coupon getOneCouponByID(int couponID) throws NotFoundException{
+		if(repo.getOne(couponID)!= null) {
+			return repo.getOne(couponID);
+		}else {
+			throw new NotFoundException("coupon not found");
+		}
 	}
 
 	// 40%

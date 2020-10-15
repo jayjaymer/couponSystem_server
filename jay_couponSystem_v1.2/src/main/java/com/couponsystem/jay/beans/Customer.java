@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,7 +39,7 @@ public class Customer {
 	private String email;
 	@Column(nullable = false)
 	private String password;
-	@OneToMany(targetEntity = Coupon.class,cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Coupon.class,cascade = CascadeType.ALL)
 	private List<Coupon> coupons;
 
 	@Override

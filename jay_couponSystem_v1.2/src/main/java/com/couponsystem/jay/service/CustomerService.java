@@ -14,6 +14,8 @@ import com.couponsystem.jay.repo.CustomerRepository;
 public class CustomerService {
 	@Autowired
 	private CustomerRepository repo;
+	@Autowired
+	private CouponService couponService;
 	
 	//50%
 	public void addCustomer(Customer customer) {
@@ -64,6 +66,10 @@ public class CustomerService {
 		if (repo.findByEmailAndPassword(email, password)==null) {
 		}
 		return repo.findByEmailAndPassword(email, password);
+	}
+	
+	public Coupon getOneCoupon(int couponID) throws NotFoundException {
+		return couponService.getOneCouponByID(couponID);
 	}
 	
 	//10%

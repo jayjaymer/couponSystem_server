@@ -22,7 +22,6 @@ import lombok.Setter;
 @Setter
 public class CustomerFacadeService extends ClientFacadeService {
 
-	Customer customer;
 	private int customerID;
 
 	@Override
@@ -31,6 +30,7 @@ public class CustomerFacadeService extends ClientFacadeService {
 		if (customerService.getOneCustomerByEmailAndPassword(email, password) == null) {
 			throw new LoginFailledException();
 		}
+		this.customerID = customerService.getOneCustomerByEmailAndPassword(email, password).getId();
 		System.out.println("Customer logged in.");
 		return true;
 	}
@@ -119,9 +119,14 @@ public class CustomerFacadeService extends ClientFacadeService {
 		Customer customer = customerService.findCustomerByID(customerID);
 		return customer;
 	}
+	
+	public Coupon getOneCoupon(int couponID) throws NotFoundException {
+		return couponService.getOneCouponByID(couponID);
+	}
 
 	public void setCustomerID(int customerID) {
 		this.customerID = customerID;
 	}
+	
 
 }
