@@ -1,10 +1,10 @@
 package com.couponsystem.jay.service;
 
-import java.util.List;
 
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.couponsystem.jay.beans.Category;
 import com.couponsystem.jay.beans.Coupon;
 import com.couponsystem.jay.exceptions.NotFoundException;

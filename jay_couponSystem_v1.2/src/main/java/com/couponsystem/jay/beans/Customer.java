@@ -11,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.couponsystem.jay.exceptions.NoAccessException;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +24,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
-
 public class Customer {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

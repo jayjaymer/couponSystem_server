@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.couponsystem.jay.beans.Access;
 import com.couponsystem.jay.exceptions.LoginFailledException;
 import com.couponsystem.jay.exceptions.NoAccessException;
 import com.couponsystem.jay.exceptions.NotFoundException;

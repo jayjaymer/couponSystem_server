@@ -40,7 +40,7 @@ public class CouponCRUDTest implements CommandLineRunner {
 		// ADD COUPON
 		System.out.println("****Adding Coupons****");
 		Coupon coupon1 = Coupon.builder()
-				.companyID(1)
+				.companyID(3)
 				.category(Category.RESTAURANTS)
 				.title("Summer Sale - Zero")
 				.description("5% Discount for diet coke and zero")
@@ -52,24 +52,24 @@ public class CouponCRUDTest implements CommandLineRunner {
 				.build();
 		
 		Coupon coupon2 = Coupon.builder()
-				.companyID(1)
+				.companyID(2)
 				.category(Category.CARS)
 				.title("Model X pre-order sale")
 				.description("10% Discount on new version of model X")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2021, 10, 10)))
+				.endDate(DateUtil.changeDateType(new Date(2022, 10, 10)))
 				.amount(5)
 				.price(499)
 				.image("http://tesla")
 				.build();
 		
 		Coupon coupon3 = Coupon.builder()
-				.companyID(1)
+				.companyID(3)
 				.category(Category.RESTAURANTS)
 				.title("Soda deal")
 				.description("buy 10 get 2 for free")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2021, 8, 8)))
+				.endDate(DateUtil.changeDateType(new Date(2023, 10, 10)))
 				.amount(500)
 				.price(49.99)
 				.image("http://cokecola")
@@ -83,7 +83,7 @@ public class CouponCRUDTest implements CommandLineRunner {
 				.title("Toyota supra 5% Discount")
 				.description("Brand new 2020 supra discount")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2021,9,1)))
+				.endDate(DateUtil.changeDateType(new Date(2022, 11, 10)))
 				.amount(5)
 				.price(499)
 				.image("http://toyota")
@@ -96,7 +96,7 @@ public class CouponCRUDTest implements CommandLineRunner {
 				.title("Razer Headphones 15% Discount")
 				.description("15% off for the new Kraken Headset")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2021,10,10)))
+				.endDate(DateUtil.changeDateType(new Date(2025, 10, 10)))
 				.amount(100)
 				.price(15)
 				.image("http://razer")
@@ -108,7 +108,7 @@ public class CouponCRUDTest implements CommandLineRunner {
 				.title("20% Discount for Breakfast")
 				.description("Delicious luxory breakfast available until 11:00 AM")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2020,12,12)))
+				.endDate(DateUtil.changeDateType(new Date(2023, 1, 10)))
 				.amount(500)
 				.price(15)
 				.image("http://greg")
@@ -117,37 +117,61 @@ public class CouponCRUDTest implements CommandLineRunner {
 		Coupon coupon7 = Coupon.builder()
 				.companyID(7)
 				.category(Category.VACATION)
-				.title("Test title 7")
-				.description("0 amount coupons test")
+				.title("Italy Tour")
+				.description("best tour")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2020,11,11)))
-				.amount(0)
+				.endDate(DateUtil.changeDateType(new Date(2022, 1, 10)))
+				.amount(5)
 				.price(7)
-				.image("http://test7")
+				.image("http://tour")
 				.build();
 		
 		Coupon coupon8 = Coupon.builder()
-				.companyID(8)
+				.companyID(3)
 				.category(Category.VACATION)
-				.title("Test title 8")
-				.description("Expired Coupon test ")
+				.title("Germany tour")
+				.description("long tour ")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2020,5,5)))
+				.endDate(DateUtil.changeDateType(new Date(2026, 4, 10)))
 				.amount(8)
 				.price(8)
-				.image("http://test8")
+				.image("http://germany")
 				.build();
 		
 		Coupon coupon9 = Coupon.builder()
-				.companyID(4)
-				.category(Category.VACATION)
-				.title("Test title 9")
-				.description("Test dec 9")
+				.companyID(1)
+				.category(Category.CARS)
+				.title("Ferrari")
+				.description("Rari discount")
 				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
-				.endDate(DateUtil.changeDateType(new Date(2020,11,5)))
+				.endDate(DateUtil.changeDateType(new Date(2022, 2, 10)))
 				.amount(9)
-				.price(9)
-				.image("http://test9")
+				.price(99999)
+				.image("http://bestRarris")
+				.build();
+		
+		Coupon coupon10 = Coupon.builder()
+				.companyID(1)
+				.category(Category.CARS)
+				.title("BMW")
+				.description("BMW discount")
+				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
+				.endDate(DateUtil.changeDateType(new Date(2022, 2, 10)))
+				.amount(9)
+				.price(99999)
+				.image("http://bestBummers")
+				.build();
+		
+		Coupon coupon11 = Coupon.builder()
+				.companyID(1)
+				.category(Category.CARS)
+				.title("FORD")
+				.description("Ford discount")
+				.startDate(DateUtil.changeDateType(new Date(2020,01,01)))
+				.endDate(DateUtil.changeDateType(new Date(2022, 2, 10)))
+				.amount(9)
+				.price(99999)
+				.image("http://bestMuscle")
 				.build();
 				
 		couponService.addCoupon(coupon1);
@@ -159,6 +183,8 @@ public class CouponCRUDTest implements CommandLineRunner {
 		couponService.addCoupon(coupon7);
 		couponService.addCoupon(coupon8);
 		couponService.addCoupon(coupon9);
+		couponService.addCoupon(coupon10);
+		couponService.addCoupon(coupon11);
 		System.out.println("Coupons are added.");
 //		System.out.println();
 		

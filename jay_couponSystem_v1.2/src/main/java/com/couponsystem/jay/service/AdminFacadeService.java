@@ -158,6 +158,6 @@ public class AdminFacadeService extends ClientFacadeService {
 	
 	public List<Coupon> getAllCouponsByCompanyID(int companyID) throws NotFoundException {
 		return couponService.getCouponsByCompanyID(companyID);
-	}
+	} 
 
 }

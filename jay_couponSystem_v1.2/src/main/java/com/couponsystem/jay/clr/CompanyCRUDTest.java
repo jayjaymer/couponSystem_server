@@ -104,12 +104,12 @@ public class CompanyCRUDTest implements CommandLineRunner {
 		System.out.println("*Companies are added.*");
 		
 		
-		couponService.addPurchaseCoupon(1, 1);
-		couponService.addPurchaseCoupon(2, 4);
+		couponService.addPurchaseCoupon(4, 1);
+		couponService.addPurchaseCoupon(5, 4);
 		couponService.addPurchaseCoupon(3, 3);
-		couponService.addPurchaseCoupon(4, 2);
-		couponService.addPurchaseCoupon(1, 4);
-		couponService.addPurchaseCoupon(1, 5);
+		couponService.addPurchaseCoupon(3, 2);
+		couponService.addPurchaseCoupon(5, 4);
+		couponService.addPurchaseCoupon(2, 5);
 		couponService.addPurchaseCoupon(1, 3);
 		
 

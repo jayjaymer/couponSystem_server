@@ -39,7 +39,7 @@ import com.couponsystem.jay.login.ClientType;
 import com.couponsystem.jay.login.LoginManager;
 import com.couponsystem.jay.login.LoginResponse;
 import com.couponsystem.jay.service.AdminFacadeService;
-
+ 
 @RestController
 @RequestMapping("admin")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -52,12 +52,11 @@ public class AdminController extends ClientController {
 			String token = managerLogin.loginC(email, password, ClientType.ADMINISTRATOR);
 			LoginResponse responseLogin = new LoginResponse();
 			responseLogin.setToken(token);
-			System.out.println(token);
+			System.out.println(token); 
 			return new ResponseEntity<LoginResponse>(responseLogin,HttpStatus.CREATED);
 		} catch (LoginFailledException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-
 	}
 	
 	@DeleteMapping("logout")
@@ -67,17 +66,6 @@ public class AdminController extends ClientController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
-//	@PostMapping("login")
-//	public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password){
-//		admin.login(email, password);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-
-//	@PostMapping("addCompany")
-//	public ResponseEntity<?> addCompany(@RequestBody Company company) throws AlreadyExistsException {
-//		admin.createCompany(company);
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
 
 	// Company mapping
 	@PostMapping("addCompany")
@@ -149,11 +137,7 @@ public class AdminController extends ClientController {
 		}
 	}
 
-//	@GetMapping("getAllCompanies")
-//	public ResponseEntity<?> getAllCompanies() {
-//
-//		return new ResponseEntity<>(admin.getallCompanies(), HttpStatus.OK);
-//	}
+
 
 	@GetMapping("getOneCompany/{companyID}")
 	public ResponseEntity<?> getOneCompany(@PathVariable int companyID,

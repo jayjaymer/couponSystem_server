@@ -46,7 +46,6 @@ public class CompanyFacadeService extends ClientFacadeService {
 	public void createCoupon(Coupon coupon) throws AlreadyExistsException {
 		// cant add exsiting name of a coupon from the SAME company.
 		// can add coupon with the same name from OTHER company
-		System.out.println("THIS IS TYEST");
 		List<Coupon> coupons = couponService.getAllCoupons();
 
 		for (Coupon cpn : coupons) {
